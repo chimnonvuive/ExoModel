@@ -69,10 +69,10 @@ for i=1:nPop
     
     % Initialize Position
     pop(i).Position=unifrnd(VarMin,VarMax,VarSize);
-    
+    max(pop(i).Position)
     % Evaluation
     pop(i).Cost=CostFunction(pop(i).Position);
-    
+    pop(i).Cost
 end
 
 % Sort Population
@@ -171,8 +171,8 @@ for it=1:MaxIt
     % Store Best Cost Ever Found
     BestCost(it)=BestSol.Cost;
     
-    % Show Iteration Information
-    disp(['Iteration ' num2str(it) ': Best Cost = ' num2str(BestCost(it))]);
+%     % Show Iteration Information
+%     disp(['Iteration ' num2str(it) ': Best Cost = ' num2str(BestCost(it))]);
     
 end
 

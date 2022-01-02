@@ -24,7 +24,7 @@ len=640                    % The length of the genomes
 popSize=500;               % The size of the population
 maxGens=1000;                 % The maximum number of generations allowed in a run
 probCrossover=1;           % The probability of crossing over. 
-probMutation=0.003;        % The mutation probability (per bit). 
+probMutation=0.003;        % The zmutation probability (per bit). 
                            % If clampingFlag=1, probMutation should not be
                            % dependent on len, the length of the genomes.
                            %

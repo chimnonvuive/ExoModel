@@ -34,7 +34,7 @@ cstr = [-212 212
 
 
 %%
-len=640                    % The length of the genomes
+len=640;                    % The length of the genomes
 popSize=50;               % The size of the population
 maxGens=1000;                 % The maximum number of generations allowed in a run
 probCrossover=1;           % The probability of crossing over. 
@@ -70,14 +70,14 @@ maskReposFactor=5;
 uniformCrossmaskRepos=rand(popSize/2,(len+1)*maskReposFactor)<0.5;
 mutmaskRepos=rand(popSize,(len+1)*maskReposFactor)<probMutation;
 
-% preallocate vectors for recording the average and maximum fitness in each
-% generation
-avgFitnessHist=zeros(1,maxGens+1);
-maxFitnessHist=zeros(1,maxGens+1);
-
-    
-eliteIndiv = [10 3 1];
-eliteFitness = -realmax;
+% % preallocate vectors for recording the average and maximum fitness in each
+% % generation
+% avgFitnessHist=zeros(1,maxGens+1);
+% maxFitnessHist=zeros(1,maxGens+1);
+% 
+%     
+% eliteIndiv = [10 3 1];
+% eliteFitness = -realmax;
 
 
 % the population is a popSize by len matrix of randomly generated boolean
@@ -86,25 +86,16 @@ pop = rand(popSize,len) < .5;
 
 for gen=0:maxGens
 
-    bitFreqs=sum(pop)/popSize
-    lociToFlag=abs(0.5-bitFreqs)>(0.5-flagFreq) & flaggedGens<0;
-    flaggedGens(lociToFlag)=0;
-    lociToUnflag=abs(0.5-bitFreqs)<0.5-unflagFreq ;
-    flaggedGens(lociToUnflag)=-1;
-    flaggedLoci=flaggedGens>=0;
-    flaggedGens(flaggedLoci)=flaggedGens(flaggedLoci)+1;
-    mutateLocus=flaggedGens<=flagPeriod;        
-
     % evaluate the fitness of the population. The vector of fitness values 
     % returned  must be of dimensions 1 x popSize.
-    fitnessVals=oneMax(pop)
-     
-    [maxFitnessHist(1,gen+1),maxIndex]=max(fitnessVals);    
-    avgFitnessHist(1,gen+1)=mean(fitnessVals);
-    if eliteFitness<maxFitnessHist(gen+1)
-        eliteFitness=maxFitnessHist(gen+1);
-        eliteIndiv=pop(maxIndex,:);
-    end    
+    fitnessVals=oneMax(pop);
+    
+%     [maxFitnessHist(1,gen+1),maxIndex]=max(fitnessVals);    
+%     avgFitnessHist(1,gen+1)=mean(fitnessVals);
+%     if eliteFitness<maxFitnessHist(gen+1)
+%         eliteFitness=maxFitnessHist(gen+1);
+%         eliteIndiv=pop(maxIndex,:);
+%     end    
 
     % Conditionally perform sigma scaling 
     if sigmaScalingFlag
@@ -155,10 +146,19 @@ for gen=0:maxGens
     pop=[firstKids; secondKids];
     
     % implement mutation
+    bitFreqs=sum(pop)/popSize;
+    lociToFlag=abs(0.5-bitFreqs)>(0.5-flagFreq) & flaggedGens<0;
+    flaggedGens(lociToFlag)=0;
+    lociToUnflag=abs(0.5-bitFreqs)<0.5-unflagFreq ;
+    flaggedGens(lociToUnflag)=-1;
+    flaggedLoci=flaggedGens>=0;
+    flaggedGens(flaggedLoci)=flaggedGens(flaggedLoci)+1;
+    mutateLocus=flaggedGens<=flagPeriod; 
+    
     temp=floor(rand*len*(maskReposFactor-1));
     masks=mutmaskRepos(:,temp+1:temp+len);
 
     masks(:,~mutateLocus)=false;
     pop=xor(pop,masks);    
 end
- 
+pop

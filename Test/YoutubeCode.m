@@ -7,13 +7,15 @@ c = 30; % number of pairs of chromosomes to be crossovered
 m = 30; % number chromosomes to be mutated
 tg = 250; % total number of generations
 %------------
-figure
-hold on
+% figure
+% hold on
 P = population(p);
 K = 0;
 [x1, y1] = size(P);
 P1 = 0;
-for i=1:tg
+% for i=1:tg
+
+bin2float2('100010.1100001')
 
 function Y = population(n)
     % n = population size
@@ -123,4 +125,16 @@ function [YY1, YY2] = selection(P,F,p)
     end
     YY1 = Y1;
     YY2 = Fn-10;
+end
+
+function out = bin2float2(bin)
+    ind = find(bin == '.');
+    decpart = bin(1:ind-1);
+    floatpart = bin(ind+1:end);
+    out = bin2dec(decpart);
+    for n = 1:length(floatpart)
+        if floatpart(n) == '1'
+            out = out + 2^(-n);
+        end
+    end
 end
