@@ -113,13 +113,13 @@ for gen=0:maxGens
     % Normalize the fitness values and then create an array with the 
     % cumulative normalized fitness values (the last value in this array
     % will be 1)
-    cumNormFitnessVals=cumsum(fitnessVals/sum(fitnessVals));
+    cumNormFitnessVals=cumsum(fitnessVals/sum(fitnessVals))
 
     % Use fitness proportional selection with Stochastic Universal or Roulette
     % Wheel Sampling to determine the indices of the parents 
     % of all crossover operations
 
-    markers=rand(1,1)+[1:popSize]/popSize;
+    markers=rand+[1:popSize]/popSize;
     markers(markers>1)=markers(markers>1)-1;
 
     [~, parentIndices]=histc(markers,[0 cumNormFitnessVals]);
@@ -161,4 +161,3 @@ for gen=0:maxGens
     masks(:,~mutateLocus)=false;
     pop=xor(pop,masks);    
 end
-pop

@@ -28,7 +28,7 @@ for k = 1:G
     rr = find(Fit==maxFit);
     fBest = f(rr(1,1),:); %The best individual in history
     xBest = x(rr(1,1));
-    Fit = (Fit-minFit)/(maxFit-minFit) %Normalized fitness value
+    Fit = (Fit-minFit)/(maxFit-minFit); %Normalized fitness value
     %%%%%%%%%%%%%%Copy operation based on Roulette%%%%%%%%%%%%%
     sum_Fit = sum(Fit);
     fitvalue = Fit./sum_Fit;
