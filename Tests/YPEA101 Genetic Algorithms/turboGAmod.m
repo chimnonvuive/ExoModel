@@ -169,7 +169,7 @@ function GeneticAlgorithm(popSize,maxGens,probCrossover,probMutation,... % stand
         end
         pop=xor(pop,masks);    
     end
- 
+end 
 
 
 

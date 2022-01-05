@@ -1,4 +1,4 @@
-function FixDefinitionsForWindows = FixDefinitionsForWindows(file)
+function FixDefinitionsForWindows(file)
 definitions = fileread(file);
 
 STRING_TO_MATCH='extern "C" ';
