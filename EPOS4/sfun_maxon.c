@@ -140,7 +140,9 @@ static void mdlInitializeSampleTimes(SimStruct *S) {
     double tSamp = (double) mxGetScalar(ssGetSFcnParam(S, TSAMP));
     ssSetSampleTime(S, 0, tSamp);
     ssSetOffsetTime(S, 0, 0.0);
-    ssSetModelReferenceSampleTimeDefaultInheritance(S);
+//     ssSetOutputPortSampleTime(S, 0, tSamp);
+//     ssSetOutputPortOffsetTime(S, 0, 0.0);
+    ssSetModelReferenceSampleTimeDisallowInheritance(S);
 }
 
 #define MDL_START  /* Change to #undef to remove function */
@@ -254,8 +256,8 @@ static void mdlUpdate(SimStruct *S, int_T tid)
     EnterLock();
     switch (ssGetIWorkValue(S, IWORK_OPMODE)) {
         case 0: // Cylic Synchronous Current Mode
-            if (inputParam > MAX_CURRENT) inputParam = MAX_CURRENT;
-            if (inputParam < -MAX_CURRENT) inputParam = -MAX_CURRENT;
+            // if (inputParam > MAX_CURRENT) inputParam = MAX_CURRENT;
+            // if (inputParam < -MAX_CURRENT) inputParam = -MAX_CURRENT;
             VCS_SetCurrentMustEx(mHandle, NodeID, inputParam, &ErrCode);
             break;
 
