@@ -35,6 +35,7 @@ Commanding Maxon EPOS Motor Controller(s) from MATLAB on Windows Platform
 # ACKNOWLEDGMENTS
 * This library is original written by Eugenio Yime Rodriguez <Universidad Tecnologica de Bolivar> for EPOS 2 Motor Controllers
 * This is a modified version by Iordanis Kostelidis <HERMES Team> for EPOS 4 Motor Controllers
+* This is a modified version for Simulink implementation by Nguyen Quy Khoi, instructed by Dr. Nguyen Quoc Chi, PhD.
 
 # LICENSE
 Copyright (c) 2015, Eugenio
