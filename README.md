@@ -1,5 +1,6 @@
 # ExoModel
 * Lower Limb Exoskeleton Robot for Rehabilitation
+
 # Requirements
 * A PC/laptop with Windows OS (Tested on Windows 10 LTSC 1809)
 * EPOS Studio (Tested with EPOS Studio 3.7 Revision 1)
@@ -11,14 +12,6 @@
 * Download as ZIP file or clone the repository `gh repo clone chimnonvuive/ExoModel`
 * Download and install the EPOS Studio - [Download Now](https://www.maxongroup.com/medias/sys_master/root/8942467743774/EPOS-2-4-IDX-Setup.zip)
 * Start MATLAB R2020a
-* Open the `./EPOS-Libraries-for-MATLAB-Windows` using MATLAB command window
-* Run the following commands from MATLAB command window
-    ```
-    Clean
-    Make
-    ```
-* Connect your EPOS 4 Motor Controller with USB
-* Run the demo with the following command
-    ```
-    DemoEpos
-    ```
+* Open `ExoModel.prj` using MATLAB command window
+
+# Experiments
