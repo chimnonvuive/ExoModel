@@ -1,25 +1,16 @@
-# EPOS Libraries for MATLAB (on Windows)
-Commanding Maxon EPOS Motor Controller(s) from MATLAB on Windows Platform
+# Test files and experimental setups for EPOS Motor Controller(s) from MATLAB on Windows Platform
 
 # Requirements
-* A computer with Windows OS (Tested on Windows 10 Pro 1909)
-* EPOS Studio (Tested with EPOS Studio 2.4)
-* EPOS 4 Motor Controller (Tested with integrated motor - Exoskeleton Joint Actuator)
-* MATLAB (Tested with R2019b)
+* A PC/laptop with Windows OS (Tested on Windows 10 LTSC 1809)
+* EPOS Studio (Tested with EPOS Studio 3.7 Revision 1)
+* EPOS 4 Motor Controller
+* MATLAB (Tested with R2020a)
 * C++ Compiler (Tested with Microsoft Visual C++ 2019 (C) - Visual Studio 2019)
 
 # How to use it
 * Clone the repository `git clone git@github.com:HERMESTeamEU/EPOS-Libraries-for-MATLAB-Windows.git`
-* Download and install the EPOS Studio - [Download Now](https://www.maxongroup.com/medias/sys_master/root/8837358125086/EPOS-2-4-IDX-Setup.zip)
-* From `C:\Program Files (x86)\maxon motor ag\EPOS IDX\EPOS4`, find and copy the following files to `./EPOS-Libraries-for-MATLAB-Windows/Epos4Windows`
-    * `Definitions.h`
-    * `EposCmd.dll`
-    * `EposCmd.lib`
-    * `EposCmd64.dll`
-    * `EposCmd64.lib`
-    * `vxlapi.dll`
-    * `vxlapi64.dll`
-* Start the MATLAB
+* Download and install the EPOS Studio - [Download Now](https://www.maxongroup.com/medias/sys_master/root/8942467743774/EPOS-2-4-IDX-Setup.zip)
+* Start MATLAB R2020a
 * Open the `./EPOS-Libraries-for-MATLAB-Windows` using MATLAB command window
 * Run the following commands from MATLAB command window
     ```
@@ -32,8 +23,8 @@ Commanding Maxon EPOS Motor Controller(s) from MATLAB on Windows Platform
     DemoEpos
     ```
 
-# ACKNOWLEDGMENTS
-* This library is original written by Eugenio Yime Rodriguez <Universidad Tecnologica de Bolivar> for EPOS 2 Motor Controllers
+# Limitation
+* `EposCmd` library provided by Maxon group is only usable on Windows and Linux. For more information about real-time applications, please [contact Maxon group](https://support.maxongroup.com/hc/en-us/requests/new).
 * This was a modified version by Iordanis Kostelidis <HERMES Team> for EPOS 4 Motor Controllers
 * This is a modified version for Simulink implementation by Nguyen Quy Khoi, instructed by Dr. Nguyen Quoc Chi, PhD.
 
