@@ -6,7 +6,7 @@
 * EPOS Studio (Tested with EPOS Studio 3.7 Revision 1)
 * EPOS 4 Motor Controller
 * MATLAB R2020a or above
-* Any C/C++ Compiler (Tested with MinGW64 C Compiler). If your computer does not have any compiler yet, consider [download MinGW](https://osdn.net/projects/mingw/downloads/68260/mingw-get-setup.exe/) and follow the installation instruction. A useful [YouTube video](https://youtu.be/sXW2VLrQ3Bs?t=74) provides step-by-step guide to download necessary packages.
+* Any C/C++ Compiler (Tested with MinGW64 C Compiler). If your computer does not have any compiler yet, consider [download MinGW](https://osdn.net/projects/mingw/downloads/68260/mingw-get-setup.exe/) and open the executable file. A useful [YouTube video](https://youtu.be/sXW2VLrQ3Bs?t=74) provides step-by-step guide to download necessary packages.
 
 # How to use it
 * Download as ZIP file or clone the repository `gh repo clone chimnonvuive/ExoModel`
