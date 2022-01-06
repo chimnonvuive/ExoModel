@@ -11,6 +11,6 @@
 # How to use it
 * Download as ZIP file or clone the repository `gh repo clone chimnonvuive/ExoModel`
 * Start MATLAB R2020a
-* Open `ExoModel.prj` using MATLAB command window
+* From MATLAB, go to Home >> Open and choose `ExoModel.prj`
 
 # Experiments
