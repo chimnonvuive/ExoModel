@@ -16,85 +16,94 @@
 % this script to. Please email your comments to kekib@alum.vassar.edu 
 %%
 
-function GeneticAlgorithm(popSize,maxGens,probCrossover,probMutation,... % standard GA params
+function thetasTraj = GeneticAlgorithm(popSize,maxGens,probCrossover,probMutation,... % standard GA params
     useClamping,useSigmaScaling,useSUS,crossoverType,useMaskRepositories,... % set additional functions 
     flagFreq,unflagFreq,flagPeriod,... % clamping parameters
     sigmaScalingCoeff,... % sigma scaling parameters
     maskReposFactor,... % mask repositories parameters
-    lb,ub,ndec,... % additional parameters
+    lb,ub,COMxmax,tfmin,ndec,... % constraints
     Len1, Len2, Len3, h1, l1, l2, l3, l4, m1, m2, m3, m4, ... % exoskeleton parameters
-    COMRef, thetas... % input parameters
+    COMRef, tf... % input parameters
     )
     
-    % initialization
-    numTotal = (ub-lb)/10^(-ndec) + 1;
+        % initialization
+    numTotal = (ub'-lb')/10^(-ndec) + 1;
     n = floor(log2(numTotal)) + 1;
     numVars = length(n);
     len = sum(n);
-    
-    % generate random decimal population
-    realPop = zeros(popSize,numVars);
-    for i=1:numVars
-        realPop(:,i) = lb(i) + rand(:,1)*(ub(i)-lb(i));
-    end
-    
-    %
-    
-    
-    
+    cl = [1; cumsum(n(1:end-1))+1];
+    cu = cumsum(n);
+
+    % generate population size based on the number of
+    % referenced COM
+    popSize = size(COMRef,1);
+
+    % preallocate vectors for recording the average and maximum fitness in each
+    % generation
+    avgFitnessHist=zeros(1,maxGens+1);
+    maxFitnessHist=zeros(1,maxGens+1);
+    eliteIndiv=[];
+    eliteFitness=-realmax;
 
     % clamping parameters
-    flaggedGens=-ones(1,len);
+    if useClamping
+        flaggedGens=-ones(1,len);
+    end
 
-    % crossover masks to use if crossoverType==0.
-    mutationOnlycrossmasks=false(popSize,len);
+    % crossover masks to use if crossoverType==1.
+    if crossoverType == 1
+        mutationOnlycrossmasks=false(popSize,len);
+    end
 
     % pre-generate two “repositories” of random binary digits from which the  
     % the masks used in mutation and uniform crossover will be picked. 
     % maskReposFactor determines the size of these repositories.
+    if useMaskRepositories
+        uniformCrossmaskRepos = rand(popSize/2,(len+1)*maskReposFactor) < 0.5;
+        mutmaskRepos = rand(popSize,(len+1)*maskReposFactor) < probMutation;
+    end
 
-    uniformCrossmaskRepos=rand(popSize/2,(len+1)*maskReposFactor)<0.5;
-    mutmaskRepos=rand(popSize,(len+1)*maskReposFactor)<probMutation;
+    % the population is a popSize by len matrix of randomly generated real
+    % decimal values. The values are bounded according to conditions.
+    decPop = zeros(popSize,numVars);
+    binPop = zeros(popSize,len);
 
-    % the population is a popSize by len matrix of randomly generated boolean
-    % values
-    pop=rand(popSize,len)<.5;
-    binNum = zeros(popSize,len);
-    
+    for i=1:numVars
+        decPop(:,i) = lb(i) + rand(popSize,1)*(ub(i)-lb(i));
+    end
+
     for gen=0:maxGens
-        
-        % evaluate fitness function
-        COM_est = COMTrajectory(Len1,Len2,Len3,h1,...
+
+        %% evaluate the fitness of the population
+        % The vector of fitness values returned  must be of dimensions
+        % 1 x popSize.
+        thetas = decPop(:,1:numVars/2);
+        taus = decPop(:,numVars/2+1:end);
+
+        fitnessVals = fitnessFunc(Len1,Len2,Len3,h1,...
                            l1,l2,l3,l4,...
                            m1,m2,m3,m4,...
-                           thetas(:,1), thetas(:,2), thetas(:,3), thetas(:,4));
-        COMRefMat = repmat(COMRef',size(COM_est,1),1);
-        fitnessVals = 1./(2*sqrt(dot(COM_est-COMRefMat,COM_est-COMRefMat,2)) + 1);
-        
-        % encode the real values into binary code
-        for i=1:length(n)
+                           lb,ub,COMxmax,tfmin,... % constraints
+                           COMRef,thetas,taus,tf,popSize)';
+
+        [maxFitnessHist(1,gen+1),maxIndex]=max(fitnessVals);    
+        avgFitnessHist(1,gen+1)=mean(fitnessVals);
+        if eliteFitness<maxFitnessHist(gen+1)
+            eliteFitness=maxFitnessHist(gen+1);
+            eliteIndiv=decPop(maxIndex,:);
+        end               
+
+        %% encode the real values into binary values
+        for i=1:numVars
             %     gene encoding, with lb = lower bound, ub = upper bound
             %     X_bin = dec2bin( (X-X_lb)*(2^bitlength-1)/(X_ub-X_lb) )
-            binNum(:,cl(i):cu(i)) = de2bi(round((fitnessVals(:,i)-lb(i))*(2^(n(i))-1)/(ub(i)-lb(i))),'left-msb');
-        end
-        
-        bitFreqs=sum(pop)/popSize;
-        if useClamping
-            lociToFlag=abs(0.5-bitFreqs)>(0.5-flagFreq) & flaggedGens<0;
-            flaggedGens(lociToFlag)=0;
-            lociToUnflag=abs(0.5-bitFreqs)<0.5-unflagFreq ;
-            flaggedGens(lociToUnflag)=-1;
-            flaggedLoci=flaggedGens>=0;
-            flaggedGens(flaggedLoci)=flaggedGens(flaggedLoci)+1;
-            mutateLocus=flaggedGens<=flagPeriod;        
+            binPop(:,cl(i):cu(i)) = de2bi(round((decPop(:,i)-lb(i))*(2^(n(i))-1)...
+                / (ub(i)-lb(i))),n(i),'left-msb');
         end
 
+        bitFreqs=sum(binPop)/popSize;
 
-        % evaluate the fitness of the population. The vector of fitness values 
-        % returned  must be of dimensions 1 x popSize.
-        fitnessVals=oneMax(pop);
-
-        % Conditionally perform sigma scaling 
+        %% Conditionally perform sigma scaling 
         if useSigmaScaling
             sigma=std(fitnessVals);
             if sigma~=0
@@ -111,53 +120,54 @@ function GeneticAlgorithm(popSize,maxGens,probCrossover,probMutation,... % stand
         % will be 1)
         cumNormFitnessVals=cumsum(fitnessVals/sum(fitnessVals));
 
-        % Use fitness proportional selection with Stochastic Universal or Roulette
+        %% Use fitness proportional selection with Stochastic Universal or Roulette
         % Wheel Sampling to determine the indices of the parents 
         % of all crossover operations
         if useSUS
-            markers=rand(1,1)+[1:popSize]/popSize;
-            markers(markers>1)=markers(markers>1)-1;
+            markers = rand+(1:popSize)/popSize;
+            markers(markers>1) = markers(markers>1)-1;
         else
-            markers=rand(1,popSize);
+            markers = rand(1,popSize);
         end
         [~, parentIndices]=histc(markers,[0 cumNormFitnessVals]);
         parentIndices=parentIndices(randperm(popSize));    
 
         % deterimine the first parents of each mating pair
-        firstParents=pop(parentIndices(1:popSize/2),:);
+        firstParents=binPop(parentIndices(1:popSize/2),:);
         % determine the second parents of each mating pair
-        secondParents=pop(parentIndices(popSize/2+1:end),:);
+        secondParents=binPop(parentIndices(popSize/2+1:end),:);
 
-        % create crossover masks
-        if crossoverType==0
-            masks=mutationOnlycrossmasks;
-        elseif crossoverType==1
-            masks=false(popSize/2, len);
-            temp=ceil(rand(popSize/2,1)*(len-1));
-            for i=1:popSize/2
-                masks(i,1:temp(i))=true;
-            end
-        elseif crossoverType==2
-            if useMaskRepositories
-                temp=floor(rand*len*(maskReposFactor-1));
-                masks=uniformCrossmaskRepos(:,temp+1:temp+len);
-            else
-                masks=rand(popSize/2, len)<.5;
-            end
+        %% create crossover masks
+        switch crossoverType
+            case 1
+                masks=mutationOnlycrossmasks;
+            case 2
+                masks=false(popSize/2, len);
+                temp=ceil(rand(popSize/2,1)*(len-1));
+                for i=1:popSize/2
+                    masks(i,1:temp(i))=true;
+                end
+            otherwise
+                if useMaskRepositories
+                    temp=floor(rand*len*(maskReposFactor-1));
+                    masks=uniformCrossmaskRepos(:,temp+1:temp+len);
+                else
+                    masks=rand(popSize/2, len)<.5;
+                end
         end
 
         % determine which parent pairs to leave uncrossed
         reprodIndices=rand(popSize/2,1)<1-probCrossover;
         masks(reprodIndices,:)=false;
 
-        % implement crossover
+        %% implement crossover
         firstKids=firstParents;
         firstKids(masks)=secondParents(masks);
         secondKids=secondParents;
         secondKids(masks)=firstParents(masks);
-        pop=[firstKids; secondKids];
+        binPop=[firstKids; secondKids];
 
-        % implement mutation
+        %% implement mutation
         if useMaskRepositories
             temp=floor(rand*len*(maskReposFactor-1));
             masks=mutmaskRepos(:,temp+1:temp+len);
@@ -165,9 +175,28 @@ function GeneticAlgorithm(popSize,maxGens,probCrossover,probMutation,... % stand
             masks=rand(popSize, len)<probMutation;
         end
         if useClamping
+
+
+            lociToFlag=abs(0.5-bitFreqs)>(0.5-flagFreq) & flaggedGens<0;
+            flaggedGens(lociToFlag)=0;
+            lociToUnflag=abs(0.5-bitFreqs)<0.5-unflagFreq ;
+            flaggedGens(lociToUnflag)=-1;
+            flaggedLoci=flaggedGens>=0;
+            flaggedGens(flaggedLoci)=flaggedGens(flaggedLoci)+1;
+            mutateLocus=flaggedGens<=flagPeriod;
+
+            % change mask value
             masks(:,~mutateLocus)=false;
         end
-        pop=xor(pop,masks);    
+        binPop=xor(binPop,masks);
+
+        %% encode the binary values into real values
+        for i=1:numVars
+        %     gene encoding, with lb = lower bound, ub = upper bound
+        %     X = X_lb + bin2dec(Xbin)*(X_ub-X_lb)/(2^bitlength-1)
+            decPop(:,i) = lb(i) + bi2de(binPop(:,cl(i):cu(i)),2,'left-msb') ...
+                *(ub(i)-lb(i))/(2^(n(i))-1);
+        end
     end
 end 
 
