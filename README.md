@@ -14,3 +14,6 @@
 * From MATLAB, go to Home >> Open and choose `ExoModel.prj`
 
 # Experiments
+* **2 Motor testing**: Tests >> Maxon_Motor_Test >> DoubleMotorExperiment.slx
+* Start MATLAB R2020a
+* From MATLAB, go to Home >> Open and choose `ExoModel.prj`
