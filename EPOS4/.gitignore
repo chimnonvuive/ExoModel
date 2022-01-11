@@ -3,7 +3,4 @@
 *.mexw32
 *.mexw64
 
-*.dll
-*.lib
-
 .idea
