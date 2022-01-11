@@ -17,3 +17,9 @@
 * **2 Motor testing**: Tests >> Maxon_Motor_Test >> DoubleMotorExperiment.slx
 * Start MATLAB R2020a
 * From MATLAB, go to Home >> Open and choose `ExoModel.prj`
+
+# Acknowledgements
+* `ExoModel` was originally developed by Nguyen Quy Khoi (Mechatronics Engineering, HCM University of Technology). The project is instructed by Dr. Nguyen Quoc Chi, PhD. His ResearchGate profile can be found [here](https://www.researchgate.net/profile/Quoc-Chi-Nguyen).
+* If you have taken part in developing and supporting the library, feel free to add your name to the list.
+
+The development is also generously supported by the engineers of SHTP (Saigon Hi-Tech Park).
