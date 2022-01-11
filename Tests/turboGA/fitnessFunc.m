@@ -11,12 +11,25 @@ function fitnessVals = fitnessFunc(Len1,Len2,Len3,h1,...
 %         COMRefMat = repmat(COMRef,size(COM_est,1),1);
 %         COMerr = COM_est-COMRefMat;
         COMerr = COM_est-COMRef;
+        maxdist = sqrt(dot(COMerr,COMerr,2));
+%         fitnessVals = 1./(2*COMerr(:,1) + 1);
+        
+%         if all(repmat(lb,popSize,1)<[thetas taus],'all') ...
+%                 && all([thetas taus]<repmat(ub,popSize,1),'all')
+% %                 && COM_est(1)<=COMxmax
+% %         if all(repmat(lb(1:4),popSize,1)<thetas,'all') ... 
+% %                 && all(thetas<repmat(ub(1:4),popSize,1),'all') ...                  
+%             fitnessVals = 1./(2*sqrt(dot(COMerr,COMerr,2)) + 1);
+%         else
+%             fitnessVals = 1./(2*sqrt(dot(COMerr,COMerr,2)) + 100);
+%         end
+
         if all(repmat(lb,popSize,1)<[thetas taus],'all') ...
                 && all([thetas taus]<repmat(ub,popSize,1),'all') ...
                 && COM_est(1)<=COMxmax
 %         if all(repmat(lb(1:4),popSize,1)<thetas,'all') ... 
 %                 && all(thetas<repmat(ub(1:4),popSize,1),'all') ...                  
-            fitnessVals = 1./(2*sqrt(dot(COMerr,COMerr,2)) + 1);
+            fitnessVals = 1./(2*COMerr(:,1).^2 + 1);
         else
-            fitnessVals = 1./(2*sqrt(dot(COMerr,COMerr,2)) + 100);
+            fitnessVals = 1./(2*COMerr(:,1).^2 + 100);
         end
