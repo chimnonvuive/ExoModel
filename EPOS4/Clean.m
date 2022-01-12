@@ -30,6 +30,7 @@ delete *.autosave
 try
     rmdir('dig','s')
     rmdir('Data\Cache\*','s')
+    rmdir('Data\Cache\slprj','s')
 catch
 end
 
