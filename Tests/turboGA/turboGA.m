@@ -20,7 +20,7 @@ clampingFlag=1;            % 1 => Use a mechanism called clamping (see
                            %       http://www.cs.brandeis.edu/~kekib/GAWorkings.pdf for details)
                            % 0 => Do not use clamping
 
-len=640                    % The length of the genomes
+len=550                    % The length of the genomes
 popSize=500;               % The size of the population
 maxGens=1000;                 % The maximum number of generations allowed in a run
 probCrossover=1;           % The probability of crossing over. 
