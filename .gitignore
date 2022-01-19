@@ -1,0 +1,6 @@
+*.mexa64
+*.mexa32
+*.mexw32
+*.mexw64
+
+.idea

@@ -53,8 +53,8 @@ static void mdlInitializeSizes(SimStruct *S) {
     /* Obtain Node ID */
     int NodeID = (int) mxGetScalar(ssGetSFcnParam(S, NODEID));
 
-    // /* Obtain Sample Time */
-    // double tSamp = (double) mxGetScalar(ssGetSFcnParam(S, TSAMP));
+    /* Obtain Sample Time */
+    double tSamp = (double) mxGetScalar(ssGetSFcnParam(S, TSAMP));
 
     /* Obtain Operation Mode */
     int OperationMode = (int) mxGetScalar(ssGetSFcnParam(S, OPMODE));
@@ -110,8 +110,8 @@ static void mdlInitializeSizes(SimStruct *S) {
 
     /* Port based sample time */
     ssSetNumSampleTimes      (S, 1);
-    // ssSetInputPortSampleTime (S, 0, tSamp);
-    // ssSetInputPortOffsetTime (S, 0, 0);
+    ssSetInputPortSampleTime (S, 0, tSamp);
+    ssSetInputPortOffsetTime (S, 0, 0);
     // ssSetOutputPortSampleTime(S, 0, tSamp / 2);
     // ssSetOutputPortOffsetTime(S, 0, 0);
 
@@ -305,10 +305,10 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
     /* Obtaining actual position */
     EnterLock();
     VCS_GetPositionIs (mHandle, NodeID, &pos, &ErrCode);
-    VCS_GetVelocityIs (mHandle, NodeID, &vel, &ErrCode);
-    // VCS_GetVelocityIsAveraged (mHandle, NodeID, &vel_avg, &ErrCode);
-    VCS_GetCurrentIsEx(mHandle, NodeID, &cur, &ErrCode);
-    // VCS_GetCurrentIsAveragedEx(mHandle, NodeID, &cur_avg, &ErrCode);
+//     VCS_GetVelocityIs (mHandle, NodeID, &vel, &ErrCode);
+    VCS_GetVelocityIsAveraged (mHandle, NodeID, &vel_avg, &ErrCode);
+//     VCS_GetCurrentIsEx(mHandle, NodeID, &cur, &ErrCode);
+    VCS_GetCurrentIsAveragedEx(mHandle, NodeID, &cur_avg, &ErrCode);
     LeaveLock();
 
     /* output */
@@ -318,8 +318,8 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
     // yC[0] = (real_T) cur;
     // yC[1] = (real_T) cur_avg;
     sensorSignal->Angle = (real_T) pos;
-    sensorSignal->Speed = (real_T) vel;
-    sensorSignal->Current = (real_T) cur;
+    sensorSignal->Speed = (real_T) vel_avg;
+    sensorSignal->Current = (real_T) cur_avg;
 }
 
 /* Function: mdlTerminate =====================================================
