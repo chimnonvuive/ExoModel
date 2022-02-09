@@ -212,7 +212,13 @@ static void mdlStart(SimStruct *S) {
         LeaveLock();
         return;
     };
-    if (!VCS_DefinePosition(mHandle, NodeID, 0, &ErrCode)) {
+//     if (!VCS_DefinePosition(mHandle, NodeID, 0, &ErrCode)) {
+//         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
+//         ssSetErrorStatus(S, "Error setting zero");
+//         LeaveLock();
+//         return;
+//     };
+    if (!VCS_FindHome(mHandle, NodeID, HM_INDEX_NEGATIVE_SPEED, &ErrCode)) {
         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
         ssSetErrorStatus(S, "Error setting zero");
         LeaveLock();

@@ -29,7 +29,18 @@
 									<DeviceItem>
 										<Name>EPOS4 CAN</Name>
 										<CLSID>F44CB9AF-4ABE-48C4-9A96-A39FA5777DC7</CLSID>
-										<SystemTag>5BCA2FC6-5B68-48ed-892E-2B9C922BE266</SystemTag>
+										<SystemTag>EC88FE10-A046-43d4-9D38-B96DED308EBA</SystemTag>
+										<NetworkFdtChannelItem>
+											<Name>EXT1</Name>
+										</NetworkFdtChannelItem>
+										<NetworkFdtChannelItem>
+											<Name>EXT2</Name>
+										</NetworkFdtChannelItem>
+									</DeviceItem>
+									<DeviceItem>
+										<Name>EPOS4 CAN</Name>
+										<CLSID>F44CB9AF-4ABE-48C4-9A96-A39FA5777DC7</CLSID>
+										<SystemTag>3642E715-C249-4bce-A1B9-7DD23AB6735E</SystemTag>
 										<NetworkFdtChannelItem>
 											<Name>EXT1</Name>
 										</NetworkFdtChannelItem>
@@ -43,7 +54,32 @@
 					</CommDriverItem>
 				</NetworkHost>
 			</NetworkTopology>
-			<WindowInformation></WindowInformation>
+			<WindowInformation>
+				<ControlWindow>
+					<Name>Object Dictionary - EPOS4 CAN [Node 1]</Name>
+					<SystemTag>B30212A1-7175-4f51-AA50-74997F55F9A6</SystemTag>
+					<FunctionId>33554432</FunctionId>
+					<InvokeId>C1825F93-E6E2-437e-A65E-D26D23D6B48C</InvokeId>
+					<Position>
+						<XPosition>-8</XPosition>
+						<YPosition>-31</YPosition>
+						<Width>1027</Width>
+						<Height>656</Height>
+					</Position>
+				</ControlWindow>
+				<ControlWindow>
+					<Name>I/O Monitor - EPOS4 CAN [Node 3]</Name>
+					<SystemTag>3642E715-C249-4bce-A1B9-7DD23AB6735E</SystemTag>
+					<FunctionId>134217728</FunctionId>
+					<InvokeId>5754BED7-59B7-44fd-8128-585021D3B177</InvokeId>
+					<Position>
+						<XPosition>182</XPosition>
+						<YPosition>182</YPosition>
+						<Width>829</Width>
+						<Height>435</Height>
+					</Position>
+				</ControlWindow>
+			</WindowInformation>
 		</Project>
 	</Container>
 	<Dtm>
@@ -70,7 +106,7 @@
 						<Interface>USB</Interface>
 						<Port>USB0</Port>
 						<Baudrate>1000000</Baudrate>
-						<Timeout>311</Timeout>
+						<Timeout>346</Timeout>
 					</Parameters>
 					<NetworkScanning>
 						<ScanningSetting>
@@ -161,7 +197,7 @@
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerHighValue"/>
 									<valueEntry>
-										<value>0x00000400</value>
+										<value>0x00000000</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
@@ -173,13 +209,13 @@
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerMask"/>
 									<valueEntry>
-										<value>0x00000400</value>
+										<value>0xFFFFFFFF</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderSamplingPeriod"/>
 									<valueEntry>
-										<value>100</value>
+										<value>120</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
@@ -460,12 +496,185 @@
 					</NetworkScanning>
 				</Channel>
 			</DeviceTypeSettings>
-			<Controls/>
+			<Controls>
+				<Control>
+					<InvokeId>C1825F93-E6E2-437e-A65E-D26D23D6B48C</InvokeId>
+					<FunctionId>33554432</FunctionId>
+					<Configuration>
+						<ShowEnumText>true</ShowEnumText>
+						<ShowRawValues>false</ShowRawValues>
+						<ActiveUpdateVisible>true</ActiveUpdateVisible>
+					</Configuration>
+				</Control>
+			</Controls>
 		</Configuration>
 	</Dtm>
 	<Dtm>
 		<Name>EPOS4 CAN</Name>
-		<SystemTag>5BCA2FC6-5B68-48ed-892E-2B9C922BE266</SystemTag>
+		<SystemTag>3642E715-C249-4bce-A1B9-7DD23AB6735E</SystemTag>
+		<Configuration file="DtmEpos4.dll" version="3.7.1.0">
+			<DeviceType>
+				<VersionInformation>
+					<Name>EPOS4</Name>
+					<Vendor>maxon motor ag</Vendor>
+					<Version>0001h</Version>
+				</VersionInformation>
+			</DeviceType>
+			<DeviceTypeSettings>
+				<FieldbusMode>
+					<ActiveMode>
+						<ModeId>1</ModeId>
+						<CommunicationTypeLabel>CAN</CommunicationTypeLabel>
+					</ActiveMode>
+				</FieldbusMode>
+				<ControllerType>
+					<ActiveType>
+						<TypeId>1</TypeId>
+						<ControllerTypeLabel>Positioning</ControllerTypeLabel>
+					</ActiveType>
+				</ControllerType>
+				<Parameters>
+					<Name>EPOS4 CAN</Name>
+					<VendorId>251</VendorId>
+					<NodeId>3</NodeId>
+				</Parameters>
+				<Controller>
+					<Axis>
+						<Name>Axis</Name>
+						<recorderConfigurationList>
+							<selectedConfiguration/>
+							<recorderConfiguration uniqueID="REC_CUSTOM_RECORDER">
+								<name>Custom</name>
+								<description>Configuration customizable by user</description>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderVariable1Idx"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderVariable2Idx"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderVariable3Idx"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderVariable4Idx"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerVariableIdx"/>
+									<valueEntry>
+										<value>0x60410000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerMode"/>
+									<enumEntryIDRef uniqueIDRef="RTM_RISING_EDGE"/>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerHighValue"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerLowValue"/>
+									<valueEntry>
+										<value>0x00000000</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerMask"/>
+									<valueEntry>
+										<value>0xFFFFFFFF</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderSamplingPeriod"/>
+									<valueEntry>
+										<value>120</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecorderPrecedingSamples"/>
+									<valueEntry>
+										<value>0</value>
+									</valueEntry>
+								</configurationValue>
+								<configurationValue>
+									<paramIDRef uniqueIDRef="PARAM_InternalRecoderMaxNrOfSamples"/>
+									<valueEntry>
+										<value>500</value>
+									</valueEntry>
+								</configurationValue>
+								<acquisitionMode>singleTrigger</acquisitionMode>
+							</recorderConfiguration>
+						</recorderConfigurationList>
+					</Axis>
+				</Controller>
+				<Channel Name="EXT1">
+					<Enabled>1</Enabled>
+					<ChannelType>SlotChannel</ChannelType>
+					<Parameters/>
+				</Channel>
+				<Channel Name="EXT2">
+					<Enabled>1</Enabled>
+					<ChannelType>SlotChannel</ChannelType>
+					<Parameters/>
+				</Channel>
+				<Channel Name="CAN">
+					<Enabled>0</Enabled>
+					<ChannelType>GatewayChannel</ChannelType>
+					<Parameters/>
+					<NetworkScanning>
+						<ScanningSetting>
+							<ProtocolStack>All</ProtocolStack>
+							<Interface>All</Interface>
+							<Port>All</Port>
+							<TransferRateDetection>Standard</TransferRateDetection>
+							<TransferRate>1000000</TransferRate>
+							<TransferRate>800000</TransferRate>
+							<TransferRate>500000</TransferRate>
+							<TransferRate>250000</TransferRate>
+							<TransferRate>125000</TransferRate>
+							<TransferRate>50000</TransferRate>
+							<TransferRate>20000</TransferRate>
+							<NumberOfDevicesInNetwork>127</NumberOfDevicesInNetwork>
+						</ScanningSetting>
+						<CANopenStdScanningMethod>
+							<Enabled>1</Enabled>
+							<Range>
+								<Enabled>1</Enabled>
+								<Default>1</Default>
+								<Name>Range</Name>
+								<LowValue>1</LowValue>
+								<HighValue>127</HighValue>
+							</Range>
+						</CANopenStdScanningMethod>
+					</NetworkScanning>
+				</Channel>
+			</DeviceTypeSettings>
+			<Controls>
+				<Control>
+					<InvokeId>5754BED7-59B7-44fd-8128-585021D3B177</InvokeId>
+					<FunctionId>134217728</FunctionId>
+					<Configuration/>
+				</Control>
+			</Controls>
+		</Configuration>
+	</Dtm>
+	<Dtm>
+		<Name>EPOS4 CAN</Name>
+		<SystemTag>EC88FE10-A046-43d4-9D38-B96DED308EBA</SystemTag>
 		<Configuration file="DtmEpos4.dll" version="3.7.1.0">
 			<DeviceType>
 				<VersionInformation>
@@ -537,7 +746,7 @@
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerHighValue"/>
 									<valueEntry>
-										<value>0x00000000</value>
+										<value>0x00000400</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
@@ -549,13 +758,13 @@
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderTriggerMask"/>
 									<valueEntry>
-										<value>0xFFFFFFFF</value>
+										<value>0x00000400</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
 									<paramIDRef uniqueIDRef="PARAM_InternalRecorderSamplingPeriod"/>
 									<valueEntry>
-										<value>120</value>
+										<value>100</value>
 									</valueEntry>
 								</configurationValue>
 								<configurationValue>
