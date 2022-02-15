@@ -218,7 +218,7 @@ static void mdlStart(SimStruct *S) {
 //         LeaveLock();
 //         return;
 //     };
-    if (!VCS_FindHome(mHandle, NodeID, HM_INDEX_NEGATIVE_SPEED, &ErrCode)) {
+    if (!VCS_FindHome(mHandle, NodeID, HM_ACTUAL_POSITION, &ErrCode)) {
         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
         ssSetErrorStatus(S, "Error setting zero");
         LeaveLock();
