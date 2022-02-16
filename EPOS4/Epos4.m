@@ -278,22 +278,22 @@ classdef Epos4 < handle
             % E. Yime, 2015
             %
             
-            a = GetObject(obj.Handle, obj.NodeID, 24672, 0, 1);
+            a = GetObject(obj.Handle, obj.NodeID, hex2dec('0x6060'), 0, 1);
             switch a
-                case 6
-                    res = OperationModes.HomingMode;
-                case 3
-                    res = OperationModes.ProfileVelocityMode;
                 case 1
-                    res = OperationModes.ProfilePositionMode;
-                case 255
-                    res = OperationModes.PositionMode;
-                case 254
-                    res = OperationModes.VelocityMode;
-                case 253
-                    res = OperationModes.CurrentMode;
+                    res = OperationModes.PPM;
+                case 3
+                    res = OperationModes.PVM;
+                case 6
+                    res = OperationModes.HMM;
+                case 8
+                    res = OperationModes.CSP;
+                case 9
+                    res = OperationModes.CSV;
+                case 10
+                    res = OperationModes.CST;
                 otherwise
-                    res = OperationModes.UnimplementedMode;
+                    res = OperationModes.Unimplemented;
             end
         end
             
@@ -301,17 +301,17 @@ classdef Epos4 < handle
             % This function is for setting the actual Operation Mode in a Epos4 Motor controller
             % you can use it in the following ways,
             %
-            % >> Motor1.SetOperationMode( OperationModes.HomingMode )
+            % >> Motor1.SetOperationMode( OperationModes.HMM )
             %
-            % >> Motor1.SetOperationMode( OperationModes.ProfileVelocityMode )
+            % >> Motor1.SetOperationMode( OperationModes.PVM )
             %
-            % >> Motor1.SetOperationMode( OperationModes.ProfilePositionMode )
+            % >> Motor1.SetOperationMode( OperationModes.PPM )
             %
-            % >> Motor1.SetOperationMode( OperationModes.PositionMode )
+            % >> Motor1.SetOperationMode( OperationModes.CSP )
             %
-            % >> Motor1.SetOperationMode( OperationModes.VelocityMode )
+            % >> Motor1.SetOperationMode( OperationModes.CSV )
             %
-            % >> Motor1.SetOperationMode( OperationModes.CurrentMode )
+            % >> Motor1.SetOperationMode( OperationModes.CST )
             %
             % E. Yime, 2015
             %
@@ -322,27 +322,20 @@ classdef Epos4 < handle
             bytes = 1;
             
             switch mode
-                case OperationModes.HomingMode
-                    Values = 6;
-                    
-                case OperationModes.ProfileVelocityMode
-                    Values = 3; 
-                    
-                case OperationModes.ProfilePositionMode
+                case OperationModes.PPM
                     Values = 1;
-                    
-                case OperationModes.PositionMode
-                    Values = -1;
-                    
-                case OperationModes.VelocityMode
-                    Values = -2;
-                    
-                case OperationModes.CurrentMode
-                    Values = -3;
-                    
+                case OperationModes.PVM
+                    Values = 3;     
+                case OperationModes.HMM
+                    Values = 6;    
+                case OperationModes.CSP
+                    Values = 8;
+                case OperationModes.CSV
+                    Values = 9;
+                case OperationModes.CST
+                    Values = 10;
                 otherwise
                     error('invalid mode');
-
             end
             res = SetObject(obj.Handle, obj.NodeID, Index, SubIndex, Values, bytes);
             obj.OpMode = mode;
@@ -667,7 +660,7 @@ classdef Epos4 < handle
             if ( obj.Enable == 0)
                 error('you can not do a Homing with a disabled motor');
             end
-            if ( obj.OpMode ~= OperationModes.HomingMode  )
+            if ( obj.OpMode ~= OperationModes.HMM  )
                 error('you can not do a Homing when the motor is not in Homing Mode');
             end
             if (obj.HomeMethod == 0)
@@ -822,7 +815,7 @@ classdef Epos4 < handle
             if ( obj.Enable == 0)
                 error('you can not move a disabled motor');
             end
-            if ( (obj.OpMode ~= OperationModes.PositionMode) && (obj.OpMode ~= OperationModes.ProfilePositionMode) )
+            if ( (obj.OpMode ~= OperationModes.CSP) && (obj.OpMode ~= OperationModes.PPM) )
                 error('you can not move a motor when it is not in position related mode');
             end
             
@@ -843,9 +836,9 @@ classdef Epos4 < handle
                 Abs = 0;
             end
             
-            if (obj.GetOperationMode == OperationModes.PositionMode)
+            if (obj.GetOperationMode == OperationModes.CSP)
                 res = SetPosition(obj.Handle, obj.NodeID, Position);
-            elseif (obj.GetOperationMode == OperationModes.ProfilePositionMode)
+            elseif (obj.GetOperationMode == OperationModes.PPM)
                 if ( nargin > 2) 
                     SetProfilePositionData(obj.Handle, obj.NodeID, velocity, acceleration);
                 end
@@ -892,7 +885,7 @@ classdef Epos4 < handle
             if ( obj.Enable == 0)
                 error('you can not move a disabled motor');
             end
-            if ( (obj.OpMode ~= OperationModes.VelocityMode) && (obj.OpMode ~= OperationModes.ProfileVelocityMode) )
+            if ( (obj.OpMode ~= OperationModes.CSV) && (obj.OpMode ~= OperationModes.PVM) )
                 error('you can not move a motor when it is not in velocity related mode');
             end
 
@@ -903,9 +896,9 @@ classdef Epos4 < handle
                 Acceleration = 4000;
             end
             
-            if (obj.GetOperationMode == OperationModes.VelocityMode)
+            if (obj.GetOperationMode == OperationModes.CSV)
                 res = SetVelocity(obj.Handle, obj.NodeID, Velocity);
-            elseif (obj.GetOperationMode == OperationModes.ProfileVelocityMode)
+            elseif (obj.GetOperationMode == OperationModes.PVM)
                 if (nargin > 2) 
                     SetProfileVelocityData(obj.Handle, obj.NodeID, Acceleration);
                 end
@@ -945,7 +938,7 @@ classdef Epos4 < handle
             if ( obj.Enable == 0)
                 error('you can not move a disabled motor');
             end
-            if ( obj.OpMode ~= OperationModes.CurrentMode) 
+            if ( obj.OpMode ~= OperationModes.CST) 
                 error('you can not move the motor when it is not in current mode');
             end
             res = SetCurrent( obj.Handle, obj.NodeID, current);
