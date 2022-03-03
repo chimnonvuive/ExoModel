@@ -2,5 +2,8 @@
 *.mexa32
 *.mexw32
 *.mexw64
+*.slxc
+*.original
+*.autosave
 
 .idea

@@ -15,8 +15,12 @@
 #define TSAMP  1
 #define OPMODE 2
 
-#define INPORT 0
-#define OUTSIGNAL 0
+#define NODE_ID_PARAM(S) ssGetSFcnParam(S,NODEID)
+#define SAMPLE_TIME_PARAM(S) ssGetSFcnParam(S,TSAMP)
+#define OP_MODE_PARAM(S) ssGetSFcnParam(S,OPMODE)
+
+#define INPORT1 0
+#define OUTPORT1 0
 
 #define IWORK_NODEID 0
 #define IWORK_OPMODE 1
@@ -54,7 +58,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     int NodeID = (int) mxGetScalar(ssGetSFcnParam(S, NODEID));
 
     /* Obtain Sample Time */
-    double tSamp = (double) mxGetScalar(ssGetSFcnParam(S, TSAMP));
+    time_T tSamp = mxGetScalar(SAMPLE_TIME_PARAM(S));
 
     /* Obtain Operation Mode */
     int OperationMode = (int) mxGetScalar(ssGetSFcnParam(S, OPMODE));
@@ -77,9 +81,6 @@ static void mdlInitializeSizes(SimStruct *S) {
         OpModes[3] = OMD_PROFILE_VELOCITY_MODE;
         //Profile Position Mode
         OpModes[4] = OMD_PROFILE_POSITION_MODE;
-        //Interpolated position mode is not supported
-        //for EPOS4 drivers.
-        //OpModes[5] = OMD_INTERPOLATED_POSITION_MODE;
         LeaveLock();
     };
 
@@ -87,6 +88,9 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetNumContStates(S, 0); // convert into continuous states
     ssSetNumDiscStates(S, 0); // convert into discrete states
     
+    /* Block based sample time */
+    ssSetNumSampleTimes(S, 2);
+
     /* Inputs */
 
     if (!ssSetNumInputPorts(S, 1)) return;
@@ -95,25 +99,18 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetInputPortDataType          (S, 0, SS_DOUBLE);
     ssSetInputPortDirectFeedThrough (S, 0, FALSE);
     ssSetInputPortRequiredContiguous(S, 0, TRUE);
-    
+    ssSetInputPortSampleTime        (S, INPORT1, tSamp);
+    ssSetInputPortOffsetTime        (S, INPORT1, 0);
+
     /* Outputs */
     if (!ssSetNumOutputPorts(S, 1)) return;
     // return with motorInfo struct: angle, velocity, current
-    ssSetOutputPortWidth    (S, 0, 1);
-    ssSetBusOutputObjectName(S, 0, busName);
-    ssSetOutputPortDataType (S, 0, dtype);
-    ssSetBusOutputAsStruct  (S, 0, true);
-    // ssSetOutputPortWidth   (S, 1, 2); // 2 velocity feedbacks
-    // ssSetOutputPortDataType(S, 1, SS_DOUBLE);
-    // ssSetOutputPortWidth   (S, 2, 2); // 2 current feedbacks
-    // ssSetOutputPortDataType(S, 2, SS_DOUBLE);
-
-    /* Port based sample time */
-    ssSetNumSampleTimes      (S, 1);
-    ssSetInputPortSampleTime (S, 0, tSamp);
-    ssSetInputPortOffsetTime (S, 0, 0);
-    // ssSetOutputPortSampleTime(S, 0, tSamp / 2);
-    // ssSetOutputPortOffsetTime(S, 0, 0);
+    ssSetOutputPortWidth     (S, OUTPORT1, 1);
+    ssSetBusOutputObjectName (S, OUTPORT1, busName);
+    ssSetOutputPortDataType  (S, OUTPORT1, dtype);
+    ssSetBusOutputAsStruct   (S, OUTPORT1, TRUE);
+    ssSetOutputPortSampleTime(S, OUTPORT1, tSamp / 10.0);
+    ssSetOutputPortOffsetTime(S, OUTPORT1, 0);
 
     /* No pointers, real work variables */
     ssSetNumRWork(S, 0);  
@@ -128,22 +125,23 @@ static void mdlInitializeSizes(SimStruct *S) {
 
     /* options */
     ssSetOptions(S,
-        SS_OPTION_WORKS_WITH_CODE_REUSE |
-        SS_OPTION_EXCEPTION_FREE_CODE
-//         SS_OPTION_USE_TLC_WITH_ACCELERATOR
+        (SS_OPTION_WORKS_WITH_CODE_REUSE |
+        SS_OPTION_EXCEPTION_FREE_CODE)
+//         SS_OPTION_USE_TLC_W  ITH_ACCELERATOR
         );
 }
 
+
+#define MDL_INITIALIZE_SAMPLE_TIMES
+#if defined(MDL_INITIALIZE_SAMPLE_TIMES)
 static void mdlInitializeSampleTimes(SimStruct *S) {
-    
-    /* Obtain Sample Time */
-    double tSamp = (double) mxGetScalar(ssGetSFcnParam(S, TSAMP));
-    ssSetSampleTime(S, 0, tSamp);
+    ssSetSampleTime(S, 0, mxGetScalar(SAMPLE_TIME_PARAM(S)));
     ssSetOffsetTime(S, 0, 0.0);
-//     ssSetOutputPortSampleTime(S, 0, tSamp);
-//     ssSetOutputPortOffsetTime(S, 0, 0.0);
-    ssSetModelReferenceSampleTimeDisallowInheritance(S);
+    ssSetSampleTime(S, 1, mxGetScalar(SAMPLE_TIME_PARAM(S))/10.0);
+    ssSetOffsetTime(S, 1, 0.0);
+    ssSetModelReferenceSampleTimeDefaultInheritance(S);
 }
+#endif /* MDL_INITIALIZE_SAMPLE_TIMES */
 
 #define MDL_START  /* Change to #undef to remove function */
 #if defined(MDL_START)
@@ -160,10 +158,10 @@ static void mdlStart(SimStruct *S) {
     //LONG actualpos;
 
     /* Get Node ID from first parameters */
-    WORD NodeID = (WORD) mxGetScalar(ssGetSFcnParam(S, NODEID));
+    WORD NodeID = (WORD) mxGetScalar(NODE_ID_PARAM(S));
     
     /* Get operation mode, index starts at 0 */
-    int opmode = (int) mxGetScalar(ssGetSFcnParam(S, OPMODE)) - 1;
+    int opmode = (int) mxGetScalar(OP_MODE_PARAM(S)) - 1;
 
     /* Store NodeID */
     ssSetIWorkValue(S, IWORK_NODEID, (int) NodeID);
@@ -253,7 +251,7 @@ static void mdlUpdate(SimStruct *S, int_T tid)
 
     /* Accessing inputs and outputs */
     /* real_T is double in desktop simulation */
-    const real_T *u = ssGetInputPortRealSignal(S, INPORT);
+    const real_T *u = ssGetInputPortRealSignal(S, INPORT1);
     inputParam = (long) u[0];
     
     /* Get Node ID */
