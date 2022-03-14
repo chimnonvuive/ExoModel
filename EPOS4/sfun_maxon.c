@@ -14,7 +14,7 @@
 #define NODEID 0
 #define TSAMP  1
 #define OPMODE 2
-#define KSAMPOUT 10
+#define KSAMPOUT 1
 
 #define NODE_ID_PARAM(S) ssGetSFcnParam(S,NODEID)
 #define SAMPLE_TIME_PARAM(S) ssGetSFcnParam(S,TSAMP)
@@ -90,7 +90,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetNumDiscStates(S, 0); // convert into discrete states
     
     /* Block based sample time */
-    ssSetNumSampleTimes(S, 2);
+    ssSetNumSampleTimes(S, PORT_BASED_SAMPLE_TIMES);
 
     /* Inputs */
 
@@ -100,7 +100,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetInputPortDataType          (S, 0, SS_DOUBLE);
     ssSetInputPortDirectFeedThrough (S, 0, FALSE);
     ssSetInputPortRequiredContiguous(S, 0, TRUE);
-    ssSetInputPortSampleTime        (S, INPORT1, tSamp/KSAMPOUT);
+    ssSetInputPortSampleTime        (S, INPORT1, tSamp);
     ssSetInputPortOffsetTime        (S, INPORT1, 0);
 
     /* Outputs */
@@ -110,7 +110,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetBusOutputObjectName (S, OUTPORT1, busName);
     ssSetOutputPortDataType  (S, OUTPORT1, dtype);
     ssSetBusOutputAsStruct   (S, OUTPORT1, TRUE);
-    ssSetOutputPortSampleTime(S, OUTPORT1, tSamp);
+    ssSetOutputPortSampleTime(S, OUTPORT1, tSamp/KSAMPOUT);
     ssSetOutputPortOffsetTime(S, OUTPORT1, 0);
 
     /* No pointers, real work variables */
@@ -128,7 +128,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetOptions(S,
         (SS_OPTION_WORKS_WITH_CODE_REUSE |
         SS_OPTION_EXCEPTION_FREE_CODE)
-//         SS_OPTION_USE_TLC_W  ITH_ACCELERATOR
+//         SS_OPTION_USE_TLC_WITH_ACCELERATOR
         );
 }
 
@@ -136,10 +136,10 @@ static void mdlInitializeSizes(SimStruct *S) {
 #define MDL_INITIALIZE_SAMPLE_TIMES
 #if defined(MDL_INITIALIZE_SAMPLE_TIMES)
 static void mdlInitializeSampleTimes(SimStruct *S) {
-    ssSetSampleTime(S, 0, mxGetScalar(SAMPLE_TIME_PARAM(S)));
-    ssSetOffsetTime(S, 0, 0.0);
-    ssSetSampleTime(S, 1, mxGetScalar(SAMPLE_TIME_PARAM(S))/KSAMPOUT);
-    ssSetOffsetTime(S, 1, 0.0);
+//     ssSetSampleTime(S, 0, mxGetScalar(SAMPLE_TIME_PARAM(S)));
+//     ssSetOffsetTime(S, 0, 0.0);
+//     ssSetSampleTime(S, 1, mxGetScalar(SAMPLE_TIME_PARAM(S))/KSAMPOUT);
+//     ssSetOffsetTime(S, 1, 0.0);
     ssSetModelReferenceSampleTimeDefaultInheritance(S);
 }
 #endif /* MDL_INITIALIZE_SAMPLE_TIMES */
