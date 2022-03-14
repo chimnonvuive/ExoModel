@@ -14,6 +14,7 @@
 #define NODEID 0
 #define TSAMP  1
 #define OPMODE 2
+#define KSAMPOUT 10
 
 #define NODE_ID_PARAM(S) ssGetSFcnParam(S,NODEID)
 #define SAMPLE_TIME_PARAM(S) ssGetSFcnParam(S,TSAMP)
@@ -99,7 +100,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetInputPortDataType          (S, 0, SS_DOUBLE);
     ssSetInputPortDirectFeedThrough (S, 0, FALSE);
     ssSetInputPortRequiredContiguous(S, 0, TRUE);
-    ssSetInputPortSampleTime        (S, INPORT1, tSamp);
+    ssSetInputPortSampleTime        (S, INPORT1, tSamp/KSAMPOUT);
     ssSetInputPortOffsetTime        (S, INPORT1, 0);
 
     /* Outputs */
@@ -109,7 +110,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     ssSetBusOutputObjectName (S, OUTPORT1, busName);
     ssSetOutputPortDataType  (S, OUTPORT1, dtype);
     ssSetBusOutputAsStruct   (S, OUTPORT1, TRUE);
-    ssSetOutputPortSampleTime(S, OUTPORT1, tSamp / 10.0);
+    ssSetOutputPortSampleTime(S, OUTPORT1, tSamp);
     ssSetOutputPortOffsetTime(S, OUTPORT1, 0);
 
     /* No pointers, real work variables */
@@ -137,7 +138,7 @@ static void mdlInitializeSizes(SimStruct *S) {
 static void mdlInitializeSampleTimes(SimStruct *S) {
     ssSetSampleTime(S, 0, mxGetScalar(SAMPLE_TIME_PARAM(S)));
     ssSetOffsetTime(S, 0, 0.0);
-    ssSetSampleTime(S, 1, mxGetScalar(SAMPLE_TIME_PARAM(S))/10.0);
+    ssSetSampleTime(S, 1, mxGetScalar(SAMPLE_TIME_PARAM(S))/KSAMPOUT);
     ssSetOffsetTime(S, 1, 0.0);
     ssSetModelReferenceSampleTimeDefaultInheritance(S);
 }
@@ -210,12 +211,8 @@ static void mdlStart(SimStruct *S) {
         LeaveLock();
         return;
     };
-//     if (!VCS_DefinePosition(mHandle, NodeID, 0, &ErrCode)) {
-//         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
-//         ssSetErrorStatus(S, "Error setting zero");
-//         LeaveLock();
-//         return;
-//     };
+
+    /* Set home position */
     if (!VCS_FindHome(mHandle, NodeID, HM_ACTUAL_POSITION, &ErrCode)) {
         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
         ssSetErrorStatus(S, "Error setting zero");
@@ -260,23 +257,17 @@ static void mdlUpdate(SimStruct *S, int_T tid)
     EnterLock();
     switch (ssGetIWorkValue(S, IWORK_OPMODE)) {
         case 0: // Cylic Synchronous Current Mode
-            // if (inputParam > MAX_CURRENT) inputParam = MAX_CURRENT;
-            // if (inputParam < -MAX_CURRENT) inputParam = -MAX_CURRENT;
             VCS_SetCurrentMustEx(mHandle, NodeID, inputParam, &ErrCode);
             break;
-
         case 1: // Cylic Synchronous Velocity Mode
             VCS_SetVelocityMust(mHandle, NodeID, inputParam, &ErrCode);
             break;
-
         case 2: // Cylic Synchronous Position Mode
             VCS_SetPositionMust(mHandle, NodeID, inputParam, &ErrCode);
             break;
-        
         case 3: // Profile velocity mode
             VCS_MoveWithVelocity(mHandle, NodeID, inputParam, &ErrCode);
             break;
-
         case 4: // Profile position mode
             VCS_MoveToPosition(mHandle, NodeID, inputParam, FALSE, TRUE, &ErrCode);
             break;
@@ -299,28 +290,18 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
     
     /* Access inputs and outputs */
     motorInfo *sensorSignal = (motorInfo *) ssGetOutputPortSignal(S, 0);
-    // real_T *yP = ssGetOutputPortRealSignal(S, 0);
-    // real_T *yV = ssGetOutputPortRealSignal(S, 1);
-    // real_T *yC = ssGetOutputPortRealSignal(S, 2);
-
+    
     /* Get Node ID */
     WORD NodeID = (WORD) ssGetIWorkValue(S, IWORK_NODEID);
 
     /* Obtaining actual position */
     EnterLock();
     VCS_GetPositionIs (mHandle, NodeID, &pos, &ErrCode);
-//     VCS_GetVelocityIs (mHandle, NodeID, &vel, &ErrCode);
     VCS_GetVelocityIsAveraged (mHandle, NodeID, &vel_avg, &ErrCode);
-//     VCS_GetCurrentIsEx(mHandle, NodeID, &cur, &ErrCode);
     VCS_GetCurrentIsAveragedEx(mHandle, NodeID, &cur_avg, &ErrCode);
     LeaveLock();
 
     /* output */
-    // yP[0] = (real_T) pos;
-    // yV[0] = (real_T) vel;
-    // yV[1] = (real_T) vel_avg;
-    // yC[0] = (real_T) cur;
-    // yC[1] = (real_T) cur_avg;
     sensorSignal->Angle = (real_T) pos;
     sensorSignal->Speed = (real_T) vel_avg;
     sensorSignal->Current = (real_T) cur_avg;
