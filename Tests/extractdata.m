@@ -34,7 +34,6 @@ sm_accn = timeseries(vval,timeval);
 % plot(vval(:,1))
 % plot(aval(:,1))
 
-
 %%
 save Tests/Exp_2MaxonMotors/expsetup sm_path1 sm_path2 t_f ...
     sm_posn sm_veln sm_accn

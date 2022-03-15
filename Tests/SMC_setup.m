@@ -1,9 +1,9 @@
 load motorModel.mat
 load expsetup
-% ts=0.001; a=25;b=133; sys=tf(b,[1,a,0]);
-csys = canon(m12,'companion');
-
-dsys = c2d(ss(csys.A',csys.C',csys.B',csys.D),Ts)
+% % ts=0.001; a=25;b=133; sys=tf(b,[1,a,0]);
+% csys = canon(m12,'companion');
+% 
+% dsys = c2d(ss(csys.A',csys.C',csys.B',csys.D),Ts)
 % A = dsys.A; B = dsys.B;
 % c = 15;
 % C = [c 1]';
