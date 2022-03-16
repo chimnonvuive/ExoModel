@@ -14,7 +14,7 @@ sm_traj2 = deg2rad(table2array(tabularData2));
 sm_path2 = timeseries(sm_traj2,sm_t2);
 
 %%
-n = 2; % repetition
+n = 10; % repetition
 dt = sm_path2.time(2);
 pval = repmat(sm_path2.data,n,1);
 for i=1:size(pval,2)

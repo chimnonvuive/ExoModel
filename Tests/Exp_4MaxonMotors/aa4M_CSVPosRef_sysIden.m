@@ -1,6 +1,6 @@
 %% run the real model to gather data
 paramNameValStruct.SimulationMode = 'accelerator';
-% paramNameValStruct.TimeOut        = 40;
+paramNameValStruct.TimeOut        = 40;
 simOut = sim('exp4M_CSVposRef',paramNameValStruct);
 simOut.getSimulationMetadata.TimingInfo
 
