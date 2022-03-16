@@ -10,4 +10,4 @@ p3 = simOut.p3;
 p4 = simOut.p4;
 Ts = simOut.tout(2);
 %%
-save Data/Exoskeleton/motorRawdata p1 p2 p3 p4 Ts
+save Data/Exoskeleton/moztorRawdata p1 p2 p3 p4 Ts
