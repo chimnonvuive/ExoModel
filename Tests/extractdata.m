@@ -1,3 +1,7 @@
+% According to reasearch, the patient's cadence is ~50 steps/min, with step
+% length 0.5 m. The resulting velocity is 0.4167 m/s and each step takes
+% 1.2s to complete. 
+
 t_f = 10; % end time
 opts = delimitedTextImportOptions("NumVariables",4, ...
     "Delimiter",',', ...
@@ -14,7 +18,7 @@ sm_traj2 = deg2rad(table2array(tabularData2));
 sm_path2 = timeseries(sm_traj2,sm_t2);
 
 %%
-n = 10; % repetition
+n = 3; % repetition
 dt = sm_path2.time(2);
 pval = repmat(sm_path2.data,n,1);
 for i=1:size(pval,2)
@@ -27,12 +31,12 @@ end
 timeval = 0:dt:(n*size(sm_path2.data,1)-1)*dt;
 sm_posn = timeseries(pval,timeval);
 sm_veln = timeseries(vval,timeval);
-sm_accn = timeseries(vval,timeval);
+sm_accn = timeseries(aval,timeval);
 
 % test smooth function
-% plot(pval(:,1))
-% plot(vval(:,1))
-% plot(aval(:,1))
+% plot(timeval, pval(:,1))
+% plot(timeval, vval(:,1))
+% plot(timeval, aval(:,1))
 
 %%
 save Tests/Exp_2MaxonMotors/expsetup sm_path1 sm_path2 t_f ...
