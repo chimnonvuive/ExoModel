@@ -213,7 +213,8 @@ static void mdlStart(SimStruct *S) {
     };
 
     /* Set home position */
-    if (!VCS_FindHome(mHandle, NodeID, HM_ACTUAL_POSITION, &ErrCode)) {
+    /* No homing operation required */
+    if (!VCS_DefinePosition(mHandle, NodeID, 0, &ErrCode)) {
         mexPrintf("Error setting position to zero for node %i, ErrCode is %i\n", (int) NodeID, (int) ErrCode);
         ssSetErrorStatus(S, "Error setting zero");
         LeaveLock();

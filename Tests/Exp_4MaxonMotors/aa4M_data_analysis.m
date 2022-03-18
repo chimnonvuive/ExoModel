@@ -10,6 +10,7 @@ p = [p1 p2 p3 p4];
 k = 2*pi/4096; % PPI to rad
 k1 = pi/30;
 opt = ssestOptions('InitialState','zero','EnforceStability',true);
+opt1 = ssestOptions('InitialState','estimate','EnforceStability',true);
 
 for i=1:size(K_T)
     % create iddata
@@ -36,7 +37,7 @@ for i=1:size(K_T)
         'OutputName',{'Position','Speed','Current'}, ...
         'OutputUnit',{'rad','rad/s','A'});
     ssc_sys = ssest(tmpdata2,3, ...
-        'form','canonical','DisturbanceModel','estimate',opt);
+        'form','canonical','DisturbanceModel','estimate',opt1);
     mModel{i,4} = c2d(ssc_sys,Ts);
     
     % comparison between the real raw data and estimated models
@@ -48,8 +49,8 @@ for i=1:size(K_T)
         compare(tmpdata,mModel{i,2}) % second order model evaluation
         subplot(3,1,3)
         compare(tmpdata,mModel{i,3}) % state-space model evaluation
-%         figure;
-%         compare(tmpdata2,mModel{i,4})
+        figure;
+        compare(tmpdata2,mModel{i,4})
     end
 end
 
@@ -58,10 +59,10 @@ end
 % the real data. We have to convert second-order transfer function to 
 % state-space
 
-for i=[3 4]
-    csys = canon(mModel{i,2},'companion');
-    mModel{i,4} = c2d(ss(csys.A',csys.C',csys.B',csys.D),Ts);
-end
+% for i=[3 4]
+%     csys = canon(mModel{i,2},'companion');
+%     mModel{i,4} = c2d(ss(csys.A',csys.C',csys.B',csys.D),Ts);
+% end
 
 %% save the models, clear everything
 save Data/Exoskeleton/motorModel mModel
