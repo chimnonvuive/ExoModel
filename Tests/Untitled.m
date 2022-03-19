@@ -1,11 +1,13 @@
-% tmp = out.simout;
-% x = tmp.time;
-% v = tmp.Data;
-% xq = linspace(0,10,1000)';
-% vq1 = interp1(x,v,xq);
-% 
-% TT = timetable(seconds(xq),vq1);
-% 
-% [pxx,f] = pspectrum(TT);
-% 
-% plot(f,abs(pxx))
+tmp = p1;
+x = tmp.time;
+v = tmp.Data(:,4);
+xq = (0:0.001:x(end))';
+vq1 = interp1(x,v,xq);
+
+TT = timetable(seconds(xq),vq1);
+
+[pxx,f] = pspectrum(TT);
+
+plot(f,abs(pxx))
+
+% Ts = 0.015;

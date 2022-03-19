@@ -1,6 +1,9 @@
 
 
 line_KT = 2537;
+line_KpI = 2970;
+line_KiI = 2980;
+line_
 
 N = 4;
 K_T = zeros(N,1); % muN.m/A
