@@ -5,7 +5,7 @@ load motorParamEst
 %%
 mModel = struct([]);
 nx = 2;
-isShowFig = true;
+isShowFig = false;
 p = [p1 p2 p3 p4];
 k = 2*pi/4096; % PPI to rad
 k1 = pi/30;
@@ -70,15 +70,64 @@ for i=1:size(K_T)
     if isShowFig
         figure;
         subplot(3,1,1)
-        compare(tmpdata,mModel{i,1}) % first order model evaluation
+        compare(tmp1,mModel{i,1}) % first order model evaluation
         subplot(3,1,2)
-        compare(tmpdata,mModel{i,2}) % second order model evaluation
+        compare(tmp1,mModel{i,2}) % second order model evaluation
         subplot(3,1,3)
-        compare(tmpdata,mModel{i,3}) % state-space model evaluation
+        compare(tmp1,mModel{i,3}) % state-space model evaluation
         figure;
         compare(tmp2raw,ssc_sys)
     end
 end
+
+%% Attempt to lumped all motors as coupled system
+ylumped = [p(1).Data(:,2)*k p(1).Data(:,3)*k1 ...
+    p(2).Data(:,2)*k p(2).Data(:,3)*k1 ...
+    p(3).Data(:,2)*k p(3).Data(:,3)*k1 ...
+    p(4).Data(:,2)*k p(4).Data(:,3)*k1];
+ulumped = [p(1).Data(:,1)*k1 ...
+    p(2).Data(:,1)*k1 ...
+    p(3).Data(:,1)*k1 ...
+    p(4).Data(:,1)*k1];
+yname = {'Position 1','Speed 1', ...
+    'Position 2','Speed 2', ...
+    'Position 3','Speed 3', ...
+    'Position 4','Speed 4'};
+yunit = {'rad','rpm', ...
+    'rad','rpm', ...
+    'rad','rpm', ...
+    'rad','rpm'};
+uname = {'Speed 1','Speed 2','Speed 3','Speed 4'};
+uunit = {'rad/s','rad/s','rad/s','rad/s'};
+tmp = iddata(ylumped,ulumped,Ts,'Name', ...
+        'System response', ...
+        'InputName',uname,'InputUnit',uunit, ...
+        'OutputName',yname,'OutputUnit',yunit);
+ssc_sys = ssest(tmp,1:20, ...
+        'InputDelay',Ts, ...
+        'form','canonical', ...
+        'Feedthrough',1, ...
+        'DisturbanceModel','none',opt1);
+disp(ssc_sys.Report.Fit.FitPercent)
+%     mModel{i,3} = c2d(ssc_sys,Ts);
+
+%%
+C = [20; 1];
+ucirc = 0:0.001:2*pi;
+xdim = cos(ucirc); ydim = sin(ucirc);
+figure
+for i=1:size(K_T)
+    CLdyn = (eye(nx) - mModel{i,3}.B/(C'*mModel{i,3}.B)*C')*mModel{i,3}.A;
+    eigvals = eig(CLdyn)
+    subplot(2,2,i)
+    p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
+    p(2).LineWidth = 2;
+    title(strcat('Motor node ',num2str(i)))
+    xlabel('Re'), ylabel('Im')
+    xlim([-1.1 1.1]), ylim([-1.1 1.1])
+    axis equal, grid on
+end
+sgtitle('Digital System Stability via the z-Plane')
 
 %% Remodel the motors
 % For some reasons, the state space models of motor 3 and 4 don't match
@@ -91,7 +140,7 @@ end
 % end
 
 %% save the models, clear everything
-save Data/Exoskeleton/motorModel mModel
+save Data/Exoskeleton/motorModel mModel mModelLumped
 % clear
 
 % %% PID tuning

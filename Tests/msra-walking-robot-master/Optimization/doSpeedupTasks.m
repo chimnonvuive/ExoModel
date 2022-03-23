@@ -10,7 +10,7 @@ if parallelFlag
     p = gcp;
     
     % Prevent parallel simulations from accessing Simulation Data Inspector
-    Simulink.sdi.enablePCTSupport('none');
+    Simulink.sdi.enablePCTSupport('local');
     
     % Add paths and dependent files to run simulations in parallel
     rootDir = fullfile(fileparts(mfilename('fullpath')),'..');

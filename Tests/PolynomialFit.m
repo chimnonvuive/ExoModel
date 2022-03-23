@@ -1,7 +1,7 @@
 load expsetup.mat sm_path2
 
 t_smpath = sm_path1.Time;
-Ts = 0.02;
+Ts = 0.2;
 
 tsout = resample(sm_path1,0:Ts:sm_path1.Time(end));
 t = tsout.Time;
@@ -48,8 +48,11 @@ tptsn = 0:dtimePoints:dtimePoints*(length(y1)*n)-dtimePoints;
 yn = smooth(repmat(y1,1,n));
 dyn = diff(yn)/Ts; dyn = [dyn(1); dyn]*4;
 ddyn = diff(dyn)/Ts; ddyn = [ddyn(1); ddyn]*4;
+figure(1)
 plot(tptsn,yn)
+figure(2)
 plot(tptsn,smooth(dyn,10))
+figure(3)
 plot(tptsn,smooth(ddyn,10))
 switch j
     case 1
