@@ -9,7 +9,12 @@ isShowFig = false;
 p = [p1 p2 p3 p4];
 k = 2*pi/4096; % PPI to rad
 k1 = pi/30;
-opt = ssestOptions('InitialState','zero','EnforceStability',true);
+opt = ssestOptions('InitializeMethod','n4sid', ...
+    'InitialState','zero', ...
+    'N4Weight','SSARX', ...
+    'Focus','prediction', ...
+    'EnforceStability',true, ...
+    'SearchMethod','lm');
 opt1 = ssestOptions('InitializeMethod','n4sid', ...
     'InitialState','zero', ...
     'N4Weight','SSARX', ...
@@ -21,6 +26,10 @@ opt1.SearchOptions.Tolerance = 0.001;
 opt1.SearchOptions.MaxIterations = 50;
 opt1.SearchOptions.Advanced.LMStep = 5;
 opt1.SearchOptions.Advanced.MaxBisections = 50;
+opt2 = ssestOptions('InitializeMethod','n4sid', ...
+    'InitialState','zero', ...
+    'Focus','prediction', ...
+    'EnforceStability',true);
 
 for i=1:size(K_T)
     % create iddata
@@ -36,8 +45,15 @@ for i=1:size(K_T)
     % the real model is continuous but receive digital IO. Thus, the state-
     % space model is estimated in continuous time domain and then digitized
     % with sample time Ts.
-    ssc_sys = ssest(tmp1,nx, ...
-        'form','canonical','DisturbanceModel','none',opt);
+    if i~=4
+        ssc_sys = ssest(tmp1,nx, ...
+            'form','canonical','DisturbanceModel','none',opt);
+    else
+        ssc_sys = ssest(tmp1,nx, ...
+            'form','canonical','DisturbanceModel','none',opt2);
+    end
+    derr = 5*100*pi/180/ssc_sys.B(1);
+    derr_dt = derr/Ts
     mModel{i,3} = c2d(ssc_sys,Ts);
     
     % dynamic model
@@ -61,9 +77,9 @@ for i=1:size(K_T)
         'form','canonical', ...
         'Feedthrough',1, ...
         'DisturbanceModel','none',opt1);
-    disp('Fit percent to filtered data (SI units):')
-    disp(['Position   ', 'Velocity   ', 'Current'])
-    disp(ssc_sys.Report.Fit.FitPercent')
+%     disp('Fit percent to filtered data (SI units):')
+%     disp(['Position   ', 'Velocity   ', 'Current'])
+%     disp(ssc_sys.Report.Fit.FitPercent')
     mModel{i,4} = c2d(ssc_sys,Ts);
     
     % comparison between the real raw data and estimated models
@@ -103,7 +119,7 @@ tmp = iddata(ylumped,ulumped,Ts,'Name', ...
         'System response', ...
         'InputName',uname,'InputUnit',uunit, ...
         'OutputName',yname,'OutputUnit',yunit);
-ssc_sys = ssest(tmp,1:20, ...
+ssc_sys = ssest(tmp,8, ...
         'InputDelay',Ts, ...
         'form','canonical', ...
         'Feedthrough',1, ...
@@ -112,13 +128,17 @@ disp(ssc_sys.Report.Fit.FitPercent)
 %     mModel{i,3} = c2d(ssc_sys,Ts);
 
 %%
-C = [20; 1];
+close all
+C = [30 12 25 5
+    0.15 0.05 0.1 0.025];
 ucirc = 0:0.001:2*pi;
 xdim = cos(ucirc); ydim = sin(ucirc);
 figure
 for i=1:size(K_T)
-    CLdyn = (eye(nx) - mModel{i,3}.B/(C'*mModel{i,3}.B)*C')*mModel{i,3}.A;
-    eigvals = eig(CLdyn)
+    CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
+        *mModel{i,3}.A;
+    eigvals = eig(CLdyn);
+%     C(:,i)'*mModel{i,3}.B
     subplot(2,2,i)
     p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
     p(2).LineWidth = 2;
@@ -127,7 +147,7 @@ for i=1:size(K_T)
     xlim([-1.1 1.1]), ylim([-1.1 1.1])
     axis equal, grid on
 end
-sgtitle('Digital System Stability via the z-Plane')
+% sgtitle('Digital System Stability via the z-Plane')
 
 %% Remodel the motors
 % For some reasons, the state space models of motor 3 and 4 don't match
@@ -140,7 +160,8 @@ sgtitle('Digital System Stability via the z-Plane')
 % end
 
 %% save the models, clear everything
-save Data/Exoskeleton/motorModel mModel mModelLumped
+save Data/Exoskeleton/motorModel mModel
+% mModelLumped
 % clear
 
 % %% PID tuning
