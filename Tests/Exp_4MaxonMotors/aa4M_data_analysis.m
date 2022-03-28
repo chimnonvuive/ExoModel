@@ -160,6 +160,18 @@ end
 %     mModel{i,4} = c2d(ss(csys.A',csys.C',csys.B',csys.D),Ts);
 % end
 
+% tmp = p1;
+% x = tmp.time;
+% v = tmp.Data(:,4);
+% xq = (0:0.001:x(end))';
+% vq1 = interp1(x,v,xq);
+% 
+% TT = timetable(seconds(xq),vq1);
+% 
+% [pxx,f] = pspectrum(TT);
+% 
+% plot(f,abs(pxx))
+
 %% save the models, clear everything
 save Data/Exoskeleton/motorModel mModel
 % mModelLumped
