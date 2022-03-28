@@ -7,6 +7,7 @@ mModel = struct([]);
 nx = 2;
 isShowFig = false;
 p = [p1 p2 p3 p4];
+derr = zeros(1,length(p));
 k = 2*pi/4096; % PPI to rad
 k1 = pi/30;
 opt = ssestOptions('InitializeMethod','n4sid', ...
@@ -46,15 +47,14 @@ for i=1:size(K_T)
     % space model is estimated in continuous time domain and then digitized
     % with sample time Ts.
     if i~=4
-        ssc_sys = ssest(tmp1,nx, ...
+        mModel{i,5} = ssest(tmp1,nx, ...
             'form','canonical','DisturbanceModel','none',opt);
     else
-        ssc_sys = ssest(tmp1,nx, ...
+        mModel{i,5} = ssest(tmp1,nx, ...
             'form','canonical','DisturbanceModel','none',opt2);
     end
-    derr = 5*100*pi/180/ssc_sys.B(1);
-    derr_dt = derr/Ts
-    mModel{i,3} = c2d(ssc_sys,Ts);
+    derr(i) = 5*100*pi/180/mModel{i,5}.B(1);
+    mModel{i,3} = c2d(mModel{i,5},Ts);
     
     % dynamic model
     cur_data = smoothdata(p(i).Data(:,4)/1e3,'gaussian','SmoothingFactor',0.1);
@@ -80,6 +80,7 @@ for i=1:size(K_T)
 %     disp('Fit percent to filtered data (SI units):')
 %     disp(['Position   ', 'Velocity   ', 'Current'])
 %     disp(ssc_sys.Report.Fit.FitPercent')
+    mModel{i,6} = ssc_sys;
     mModel{i,4} = c2d(ssc_sys,Ts);
     
     % comparison between the real raw data and estimated models
@@ -138,7 +139,7 @@ for i=1:size(K_T)
     CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
         *mModel{i,3}.A;
     eigvals = eig(CLdyn);
-%     C(:,i)'*mModel{i,3}.B
+    C(:,i)'*mModel{i,3}.B*abs(derr(i))
     subplot(2,2,i)
     p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
     p(2).LineWidth = 2;
