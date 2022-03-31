@@ -2,7 +2,7 @@
 % length 0.5 m. The resulting velocity is 0.4167 m/s and each step takes
 % 1.2s to complete. 
 
-t_f = 15; % end time
+t_f = 10; % end time
 opts = delimitedTextImportOptions("NumVariables",4, ...
     "Delimiter",',', ...
     "VariableNames",{'Left hip','Left knee','Right hip','Right knee'}, ...
@@ -29,7 +29,7 @@ for i=1:size(pval,2)
     aval(:,i) = [tmp(1); tmp];
 end
 timeval = 0:dt:(n*size(sm_path2.data,1)-1)*dt;
-sm_posn = timeseries(pval,timeval);
+sm_posn = ztimeseries(pval,timeval);
 sm_veln = timeseries(vval,timeval);
 sm_accn = timeseries(aval,timeval);
 

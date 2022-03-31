@@ -34,45 +34,51 @@ opt2 = ssestOptions('InitializeMethod','n4sid', ...
 
 for i=1:size(K_T)
     % create iddata
-    tmp1 = iddata(p(i).Data(:,3)*k1,p(i).Data(:,1)*k1,Ts,'Name', ...
+    tmp1raw = iddata(p(i).Data(:,3)*k1,p(i).Data(:,1)*k1,Ts,'Name', ...
         strcat('Motor ',num2str(i),' response'), ...
         'InputName',{'Time'},'InputUnit',{'s'}, ...
-        'OutputName',{'Velocity'},'OutputUnit',{'rpm'});
+        'OutputName',{'Velocity'},'OutputUnit',{'rad/s'});
     % continuous transfer function estimation with 1 pole and no zero
-    mModel{i,1} = tfest(tmp1,1,0); % m11.Report.Fit
+    mModel{i,1} = tfest(tmp1raw,1,0); % m11.Report.Fit
     % continuous transfer function estimation with 2 poles and no zero
-    mModel{i,2} = tfest(tmp1,2,0); % m12.Report.Fit
+    mModel{i,2} = tfest(tmp1raw,2,0); % m12.Report.Fit
     % state-space estimation
     % the real model is continuous but receive digital IO. Thus, the state-
     % space model is estimated in continuous time domain and then digitized
     % with sample time Ts.
-    if i~=4
-        mModel{i,5} = ssest(tmp1,nx, ...
-            'form','canonical','DisturbanceModel','none',opt);
-    else
-        mModel{i,5} = ssest(tmp1,nx, ...
-            'form','canonical','DisturbanceModel','none',opt2);
-    end
+%     if i~=4
+%         mModel{i,5} = ssest(tmp1,nx, ...
+%             'form','canonical','DisturbanceModel','none',opt);
+%     else
+    tmp2raw = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1], ...
+        p(i).Data(:,1)*k1,Ts,'Name', ...
+        strcat('Motor ',num2str(i),' response'), ...
+        'InputName',{'Time'},'InputUnit',{'s'}, ...
+        'OutputName',{'Position','Velocity'}, ...
+        'OutputUnit',{'rad','rad/s'});
+    mModel{i,5} = ssest(tmp2raw,nx, ...
+        'form','canonical','DisturbanceModel','none',opt);
+%     end
     derr(i) = 5*100*pi/180/mModel{i,5}.B(1);
     mModel{i,3} = c2d(mModel{i,5},Ts);
     
     % dynamic model
     cur_data = smoothdata(p(i).Data(:,4)/1e3,'gaussian','SmoothingFactor',0.1);
     
-    tmp2raw = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1 p(i).Data(:,4)/1e3], ...
+    tmp3raw = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1 p(i).Data(:,4)/1e3], ...
         p(i).Data(:,1)*k1,Ts,'Name', ...
         strcat('Motor ',num2str(i),' response'), ...
         'InputName',{'Time'},'InputUnit',{'s'}, ...
         'OutputName',{'Position','Speed','Current'}, ...
         'OutputUnit',{'rad','rad/s','A'});
     
-    tmp2fil = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1 cur_data], ...
+    tmp3fil = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1 cur_data], ...
         p(i).Data(:,1)*k1,Ts,'Name', ...
         strcat('Motor ',num2str(i),' response'), ...
         'InputName',{'Time'},'InputUnit',{'s'}, ...
         'OutputName',{'Position','Speed','Current'}, ...
         'OutputUnit',{'rad','rad/s','A'});
-    ssc_sys = ssest(tmp2fil,3, ...
+    ssc_sys = ssest(tmp3fil,3, ...
         'InputDelay',Ts, ...
         'form','canonical', ...
         'Feedthrough',1, ...
@@ -87,13 +93,13 @@ for i=1:size(K_T)
     if isShowFig
         figure;
         subplot(3,1,1)
-        compare(tmp1,mModel{i,1}) % first order model evaluation
+        compare(tmp1raw,mModel{i,1}) % first order model evaluation
         subplot(3,1,2)
-        compare(tmp1,mModel{i,2}) % second order model evaluation
+        compare(tmp1raw,mModel{i,2}) % second order model evaluation
         subplot(3,1,3)
-        compare(tmp1,mModel{i,3}) % state-space model evaluation
+        compare(tmp1raw,mModel{i,3}) % state-space model evaluation
         figure;
-        compare(tmp2raw,ssc_sys)
+        compare(tmp3raw,ssc_sys)
     end
 end
 
@@ -129,25 +135,25 @@ disp(ssc_sys.Report.Fit.FitPercent)
 %     mModel{i,3} = c2d(ssc_sys,Ts);
 
 %%
-close all
-C = [30 12 25 5
-    0.15 0.05 0.1 0.025];
-ucirc = 0:0.001:2*pi;
-xdim = cos(ucirc); ydim = sin(ucirc);
-figure
-for i=1:size(K_T)
-    CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
-        *mModel{i,3}.A;
-    eigvals = eig(CLdyn);
-    C(:,i)'*mModel{i,3}.B*abs(derr(i))
-    subplot(2,2,i)
-    p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
-    p(2).LineWidth = 2;
-    title(strcat('Motor node ',num2str(i)))
-    xlabel('Re'), ylabel('Im')
-    xlim([-1.1 1.1]), ylim([-1.1 1.1])
-    axis equal, grid on
-end
+% close all
+% C = [-10 12 25 5
+%     1 1 0.1 0.025];
+% ucirc = 0:0.001:2*pi;
+% xdim = cos(ucirc); ydim = sin(ucirc);
+% figure
+% for i=1:size(K_T)
+%     CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
+%         *mModel{i,3}.A;
+%     eigvals = eig(CLdyn);
+%     C(:,i)'*mModel{i,3}.B*abs(derr(i))
+%     subplot(2,2,i)
+%     p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
+%     p(2).LineWidth = 2;
+%     title(strcat('Motor node ',num2str(i)))
+%     xlabel('Re'), ylabel('Im')
+%     xlim([-1.1 1.1]), ylim([-1.1 1.1])
+%     axis equal, grid on
+% end
 % sgtitle('Digital System Stability via the z-Plane')
 
 %% Remodel the motors
@@ -172,8 +178,25 @@ end
 % 
 % plot(f,abs(pxx))
 
+%%
+close all
+svars = [svar1 svar2 svar3 svar4];
+figure
+for i=1:4
+    subplot(2,2,i)
+    hold on
+    plot(svars(i).Data(1,1),svars(i).Data(1,2),'ko','LineWidth',2)
+    plot(svars(i).Data(:,1),svars(i).Data(:,2),'k--')
+    plot(svars(i).Data(end,1),svars(i).Data(end,2),'kx','LineWidth',2)
+    grid on
+    % xlabel('\ddot x')
+    hold off
+end
+
+% save Data/Exoskeleton/DSMCparams svars
 %% save the models, clear everything
 save Data/Exoskeleton/motorModel mModel
+% clear
 % mModelLumped
 % clear
 
