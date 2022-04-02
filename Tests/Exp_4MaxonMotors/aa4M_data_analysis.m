@@ -33,6 +33,7 @@ opt2 = ssestOptions('InitializeMethod','n4sid', ...
     'EnforceStability',true);
 
 for i=1:size(K_T)
+    
     % create iddata
     tmp1raw = iddata(p(i).Data(:,3)*k1,p(i).Data(:,1)*k1,Ts,'Name', ...
         strcat('Motor ',num2str(i),' response'), ...
@@ -42,14 +43,12 @@ for i=1:size(K_T)
     mModel{i,1} = tfest(tmp1raw,1,0); % m11.Report.Fit
     % continuous transfer function estimation with 2 poles and no zero
     mModel{i,2} = tfest(tmp1raw,2,0); % m12.Report.Fit
+    
+    
     % state-space estimation
     % the real model is continuous but receive digital IO. Thus, the state-
     % space model is estimated in continuous time domain and then digitized
     % with sample time Ts.
-%     if i~=4
-%         mModel{i,5} = ssest(tmp1,nx, ...
-%             'form','canonical','DisturbanceModel','none',opt);
-%     else
     tmp2raw = iddata([p(i).Data(:,2)*k p(i).Data(:,3)*k1], ...
         p(i).Data(:,1)*k1,Ts,'Name', ...
         strcat('Motor ',num2str(i),' response'), ...
@@ -58,9 +57,9 @@ for i=1:size(K_T)
         'OutputUnit',{'rad','rad/s'});
     mModel{i,5} = ssest(tmp2raw,nx, ...
         'form','canonical','DisturbanceModel','none',opt);
-%     end
-    derr(i) = 5*100*pi/180/mModel{i,5}.B(1);
+%     derr(i) = 5*100*pi/180/mModel{i,5}.B(1);
     mModel{i,3} = c2d(mModel{i,5},Ts);
+    
     
     % dynamic model
     cur_data = smoothdata(p(i).Data(:,4)/1e3,'gaussian','SmoothingFactor',0.1);
@@ -197,8 +196,6 @@ end
 % save Data/Exoskeleton/DSMCparams svars
 %% save the models, clear everything
 save Data/Exoskeleton/motorModel mModel
-% clear
-% mModelLumped
 % clear
 
 % %% PID tuning

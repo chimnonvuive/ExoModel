@@ -1,5 +1,3 @@
-
-
 line_KT = 2537;
 line_KpI = 2970;
 line_KiI = 2980;
