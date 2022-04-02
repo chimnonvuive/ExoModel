@@ -22,7 +22,7 @@ function [sys,x0,str,ts]=mdlInitializeSizes
     sizes.DirFeedthrough = 0; 
     sizes.NumSampleTimes = 0; 
     sys=simsizes(sizes); 
-    x0=[0,0,0,0]; 
+    x0=[1,0,1,0]; 
     str=[]; 
     ts=[];
 end
@@ -43,7 +43,7 @@ function sys=mdlDerivatives(t,x,u)
 
     m1=1;l1=1; 
     lc1=1/2;I1=1/12; 
-    g=-9.8; 
+    g=9.8; 
     e1=m1*l1*lc1-I1-m1*l1^2; 
     e2=g/l1; 
 

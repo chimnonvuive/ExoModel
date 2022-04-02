@@ -18,7 +18,7 @@ sm_traj2 = deg2rad(table2array(tabularData2));
 sm_path2 = timeseries(sm_traj2,sm_t2);
 
 %%
-n = 3; % repetition
+n = 2; % repetition
 dt = sm_path2.time(2);
 pval = repmat(sm_path2.data,n,1);
 for i=1:size(pval,2)
@@ -29,7 +29,7 @@ for i=1:size(pval,2)
     aval(:,i) = [tmp(1); tmp];
 end
 timeval = 0:dt:(n*size(sm_path2.data,1)-1)*dt;
-sm_posn = ztimeseries(pval,timeval);
+sm_posn = timeseries(pval,timeval);
 sm_veln = timeseries(vval,timeval);
 sm_accn = timeseries(aval,timeval);
 
@@ -41,4 +41,4 @@ sm_accn = timeseries(aval,timeval);
 %%
 save Tests/Exp_2MaxonMotors/expsetup sm_path1 sm_path2 t_f ...
     sm_posn sm_veln sm_accn
-clear
+% clear

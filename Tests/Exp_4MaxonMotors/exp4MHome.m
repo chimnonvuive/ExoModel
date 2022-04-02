@@ -21,7 +21,7 @@ for i=1:N
 end
 wait(T)
 
-% disable motor nodes
+%% disable motor nodes
 for i=1:N
     mNodes{i}.DisableNode;
     qcs(i) = mNodes{i}.ActualPosition;

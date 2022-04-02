@@ -180,7 +180,8 @@ disp(ssc_sys.Report.Fit.FitPercent)
 
 %%
 close all
-svars = [svar1 svar2 svar3 svar4];
+load Data/Exoskeleton/DSMCparams svars
+% svars = [svar1 svar2 svar3 svar4];
 figure
 for i=1:4
     subplot(2,2,i)
