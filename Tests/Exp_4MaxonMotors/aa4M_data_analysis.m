@@ -14,7 +14,7 @@ opt = ssestOptions('InitializeMethod','n4sid', ...
     'InitialState','zero', ...
     'N4Weight','SSARX', ...
     'Focus','prediction', ...
-    'EnforceStability',true, ...
+    'EnforceStability',true, ...``````````
     'SearchMethod','lm');
 opt1 = ssestOptions('InitializeMethod','n4sid', ...
     'InitialState','zero', ...
@@ -134,25 +134,25 @@ disp(ssc_sys.Report.Fit.FitPercent)
 %     mModel{i,3} = c2d(ssc_sys,Ts);
 
 %%
-% close all
-% C = [-10 12 25 5
-%     1 1 0.1 0.025];
-% ucirc = 0:0.001:2*pi;
-% xdim = cos(ucirc); ydim = sin(ucirc);
-% figure
-% for i=1:size(K_T)
-%     CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
-%         *mModel{i,3}.A;
-%     eigvals = eig(CLdyn);
+close all
+C = [50 50 50 50
+    1 1 1 1];
+ucirc = 0:0.001:2*pi;
+xdim = cos(ucirc); ydim = sin(ucirc);
+figure
+for i=1:size(K_T)
+    CLdyn = (eye(nx) - mModel{i,3}.B/(C(:,i)'*mModel{i,3}.B)*C(:,i)')...
+        *mModel{i,3}.A;
+    eigvals = eig(CLdyn);
 %     C(:,i)'*mModel{i,3}.B*abs(derr(i))
-%     subplot(2,2,i)
-%     p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
-%     p(2).LineWidth = 2;
-%     title(strcat('Motor node ',num2str(i)))
-%     xlabel('Re'), ylabel('Im')
-%     xlim([-1.1 1.1]), ylim([-1.1 1.1])
-%     axis equal, grid on
-% end
+    subplot(2,2,i)
+    p = plot(real(eigvals),imag(eigvals),'ko',xdim,ydim);
+    p(2).LineWidth = 2;
+    title(strcat('Motor node ',num2str(i)))
+    xlabel('Re'), ylabel('Im')
+    xlim([-1.1 1.1]), ylim([-1.1 1.1])
+    axis equal, grid on
+end
 % sgtitle('Digital System Stability via the z-Plane')
 
 %% Remodel the motors
