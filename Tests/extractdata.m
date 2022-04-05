@@ -8,8 +8,8 @@ opts = delimitedTextImportOptions("NumVariables",4, ...
     "VariableNames",{'Left hip','Left knee','Right hip','Right knee'}, ...
     "VariableTypes",{'double','double','double','double'}, ...
     "PreserveVariableNames",true);
-tabularData1 = readtable('Data\Gait\Gait_2Joints_01.csv',opts);
-tabularData2 = readtable('Data\Gait\Gait_2Joints_02.csv',opts);
+tabularData1 = readtable('Data\RecordedRuns\Gait_2Joints_01.csv',opts);
+tabularData2 = readtable('Data\RecordedRuns\Gait_2Joints_02.csv',opts);
 sm_t1 = linspace(0,t_f,size(tabularData1,1));
 sm_traj1 = deg2rad(table2array(tabularData1));
 sm_path1 = timeseries(sm_traj1,sm_t1);
@@ -39,6 +39,6 @@ sm_accn = timeseries(aval,timeval);
 % plot(timeval, aval(:,1))
 
 %%
-save Tests/Exp_2MaxonMotors/expsetup sm_path1 sm_path2 t_f ...
+save Tests/Exp_4MaxonMotors/expsetup sm_path1 sm_path2 t_f ...
     sm_posn sm_veln sm_accn
 % clear
