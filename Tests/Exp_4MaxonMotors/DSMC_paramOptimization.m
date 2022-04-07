@@ -8,7 +8,6 @@ qTs = zeros(1,4);
 dels = zeros(1,4);
 xiTs = zeros(1,4);
 gamms = zeros(1,4);
-Ns = zeros(1,4);
 etas = zeros(1,4);
 vphis = zeros(1,4);
 
@@ -55,20 +54,6 @@ warning('on')
 % phase plot, spectral analysis for chattering evaluation, etc. 
 % xs = struct([]);
 
-%% Testing
-% Model DSMC_params was manually simulated and analyzed. The real motor was
-% used for validation of control algorithm. The errors stored in variable
-% xs were also recorded for analysis purposes. The parameters were
-% commented because this phase was finished 
-nodeID = 4;
-% C   =   v{nodeID}(1,1).Value;
-% del =   v{nodeID}(2,1).Value;
-% eta =   v{nodeID}(3,1).Value;
-% gamm=   v{nodeID}(4,1).Value;
-% qT  =   v{nodeID}(5,1).Value;
-% vphi=   v{nodeID}(6,1).Value;
-% xiT =   v{nodeID}(7,1).Value;
-
 %% Recording
 % Store error variables in xs for analysis purpose. The parameters were
 % commented because this phase was finished
@@ -76,4 +61,4 @@ nodeID = 4;
 
 %% Save parameters
 % save Data\Exoskeleton\DSMC_svars1M.mat xs
-save Data\Exoskeleton\DSMC_params.mat Cs dels etas gamms qTs vphis xiTs
+save Data\Exoskeleton\DSMC_params Cs dels etas gamms qTs vphis xiTs

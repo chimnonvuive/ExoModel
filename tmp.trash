@@ -1,0 +1,9 @@
+
+avrdude: AVR device initialized and ready to accept instructions
+avrdude: Device signature = 0x1e9801 (probably m2560)
+avrdude: reading input file "C:\Users\khoi\Documents\GitHub\ExoModel\Data\Cache\Code\DZ_DSMC_ert_rtw\pil\..\..\DZ_DSMC.hex"
+avrdude: writing flash (16348 bytes):
+avrdude: 16348 bytes of flash written
+
+avrdude done.  Thank you.
+
