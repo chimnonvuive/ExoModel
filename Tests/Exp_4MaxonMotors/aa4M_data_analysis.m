@@ -1,7 +1,3 @@
-
-
-
-
 % tmp = p1;
 % x = tmp.time;
 % v = tmp.Data(:,4);
@@ -83,7 +79,7 @@ theta__ddot_i = 0;
 
 theta = JointTrajFit(sm_path1.Time,a,t_f,theta_f,theta_i,theta__dot_f,theta__dot_i,theta__ddot_i);
 
-sm_veltraj = convangvel(diff(100*sm_path1.Data)/sm_path1.Time(2),'rad/s','rpm');
+sm_veltraj = diff(100*sm_path1.Data)/sm_path1.Time(2)*30/pi; % convert rad/s to rpm
 sm_veltraj = [zeros(1,size(sm_veltraj,2)); sm_veltraj];
 
 f1 = figure;
