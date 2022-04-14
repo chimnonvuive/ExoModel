@@ -1,0 +1,102 @@
+%implements s3_b0_hqzlf_TLCInterface "C"
+
+%function getInputAddr_3_2_0_0_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3141a*//*@>31412*/rtb_DataTypeConversion1"
+%endfunction
+
+%function getInput_3_2_0_0_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>31429*/rtb_DataTypeConversion1"
+%endfunction
+
+%function getInputAddr_3_4_0_0_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3145b*//*@>31453*/rtb_DataTypeConversion_ndiq"
+%endfunction
+
+%function getInput_3_4_0_0_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>3146a*/rtb_DataTypeConversion_ndiq"
+%endfunction
+
+%function getInputAddr_3_5_0_0_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3149c*//*@>31494*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInput_3_5_0_0_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>314ab*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInputAddr_3_6_0_0_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<314e1*//*@>314d7*/Motor_and_Driver_B./*@>314e7*/RateTransition_ngqs"
+%endfunction
+
+%function getInput_3_6_0_0_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>314f5*/Motor_and_Driver_B./*@>31506*/RateTransition_ngqs"
+%endfunction
+
+%function getInputAddr_3_8_0_0_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3152d*//*@>31525*/rtb_DataTypeConversion_ndiq"
+%endfunction
+
+%function getInput_3_8_0_0_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>3153c*/rtb_DataTypeConversion_ndiq"
+%endfunction
+
+%function getInputAddr_3_9_0_0_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3156e*//*@>31566*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInput_3_9_0_0_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>3157d*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInputAddr_3_9_0_0_5_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3159a*//*@>31592*/rtb_RateTransition"
+%endfunction
+
+%function getInput_3_9_0_0_5_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>315a9*/rtb_RateTransition"
+%endfunction
+
+%function getInputAddr_3_10_0_0_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<315db*//*@>315d3*/rtb_DataTypeConversion_bqjf"
+%endfunction
+
+%function getInput_3_10_0_0_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>315ea*/rtb_DataTypeConversion_bqjf"
+%endfunction
+
+%function getInputAddr_3_11_0_0_7_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<3161c*//*@>31614*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInput_3_11_0_0_7_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>3162b*/rtb_SignPreIntegrator"
+%endfunction
+
+%function getInputAddr_3_6_0_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&/*@<316a0*//*@>31696*/Motor_and_Driver_B./*@>316a6*/RateTransition_ngqs"
+%endfunction
+
+%function getInput_3_6_0_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "/*@>316b4*/Motor_and_Driver_B./*@>316c5*/RateTransition_ngqs"
+%endfunction
+

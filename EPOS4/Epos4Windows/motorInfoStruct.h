@@ -3,9 +3,9 @@
 #define DEFINED_TYPEDEF_FOR_motorInfo_
 
 typedef struct {
-  double Angle;
-  double Speed;
-  double Current;
+  float Angle;
+  float Speed;
+  float Current;
 } motorInfo;
 
 #endif

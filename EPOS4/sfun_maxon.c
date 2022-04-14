@@ -5,7 +5,7 @@
 
 #include "mex.h"
 #include "Definitions.h"
-#include "Epos4Windows/motorInfoStruct.h"
+#include "motorInfoStruct.h"
 
 #ifdef _LINUX_
 #include "Win2Linux.h"
@@ -97,7 +97,7 @@ static void mdlInitializeSizes(SimStruct *S) {
     if (!ssSetNumInputPorts(S, 1)) return;
     // ssSetBusInputAsStruct(S, 0, true);
     ssSetInputPortWidth             (S, 0, 1);
-    ssSetInputPortDataType          (S, 0, SS_DOUBLE);
+    ssSetInputPortDataType          (S, 0, DYNAMICALLY_TYPED);
     ssSetInputPortDirectFeedThrough (S, 0, FALSE);
     ssSetInputPortRequiredContiguous(S, 0, TRUE);
     ssSetInputPortSampleTime        (S, INPORT1, tSamp);
@@ -303,9 +303,9 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
     LeaveLock();
 
     /* output */
-    sensorSignal->Angle = (real_T) pos;
-    sensorSignal->Speed = (real_T) vel_avg;
-    sensorSignal->Current = (real_T) cur_avg;
+    sensorSignal->Angle = pos;
+    sensorSignal->Speed = vel_avg;
+    sensorSignal->Current = cur_avg;
 }
 
 /* Function: mdlTerminate =====================================================

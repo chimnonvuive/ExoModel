@@ -80,8 +80,8 @@ if ( win32  || win64  )
     
     FixDefinitionsForWindows('.\Epos4Windows\Definitions.h')
 end
-
-if isempty('.mexw64')
+%%
+if ~size(dir('*.mexw64'),1)
     % compile each file
     for i=1:size(sourcecode, 2)
         strcmd = strcat('mex', ...
@@ -90,12 +90,12 @@ if isempty('.mexw64')
             ' -I', includedir, ...
             ' -L', includedir, ...
             ' -l', libeposname, ...
-            ' -silent'); 
-        eval( char(strcmd) )
+            ' -silent')
+%         eval( char(strcmd) )
     end
     disp('.. finishing compiling')
 end
-    
+%%
 % add directory to path
 disp('.. adding directory to path')
 dirtopath = cd;

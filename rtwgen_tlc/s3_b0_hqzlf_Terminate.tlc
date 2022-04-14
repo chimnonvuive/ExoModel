@@ -1,0 +1,27 @@
+%implements s3_b0_hqzlf_Terminate "C"
+
+%function Terminate(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+/* Terminate for SimscapeExecutionBlock: '<S6>/STATE_1' */
+/*@>2aa3f*/neu_destroy_diagnostic_manager(/*@>ffa3*/(NeuDiagnosticManager *)/*@>2e73c*/Motor_and_Driver_DW./*@>3275a*/STATE_1_DiagMgr);
+/*@>2aa41*/nesl_destroy_simulation_data(/*@>ffa7*/(NeslSimulationData *)/*@>2e744*/Motor_and_Driver_DW./*@>3275d*/STATE_1_SimData);
+/*@>2aa43*/nesl_erase_simulator(/*@>1e422*/"Motor_and_Driver/Solver Configuration_1");
+/*@>2aa45*/nesl_destroy_registry();
+/* Terminate for SimscapeExecutionBlock: '<S6>/OUTPUT_1_0' */
+/*@>2aa47*/neu_destroy_diagnostic_manager(/*@>ffab*/(NeuDiagnosticManager *)/*@>2e74c*/Motor_and_Driver_DW./*@>32760*/OUTPUT_1_0_DiagMgr);
+/*@>2aa49*/nesl_destroy_simulation_data(/*@>ffaf*/(NeslSimulationData *)/*@>2e754*/Motor_and_Driver_DW./*@>32763*/OUTPUT_1_0_SimData);
+/*@>2aa4b*/nesl_erase_simulator(/*@>1e427*/"Motor_and_Driver/Solver Configuration_1");
+/*@>2aa4d*/nesl_destroy_registry();
+%closefile cfgTxt
+%<cfgTxt>
+%endfunction
+%function TerminateFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Terminate(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 1, fcnProtoType)>
+%endfunction
