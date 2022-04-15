@@ -1,0 +1,138 @@
+%implements s3_b0_ll7nf_ModelInitialize "C"
+
+%function ModelInitialize(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+NeModelParameters modelParameters;
+NeModelParameters modelParameters_0;
+NeslSimulationData *tmp_1;
+NeslSimulator *tmp;
+NeuDiagnosticManager *diagnosticManager;
+NeuDiagnosticTree *diagnosticTree;
+NeuDiagnosticTree *diagnosticTree_0;
+real_T tmp_2;
+int32_T tmp_3;
+boolean_T tmp_0;
+%closefile localVarDecl
+%<SLibInsertAsyncTaskInitializeCode(system)>
+%<SLibWriteMachineInitialize()>
+%<SLibCGIRDumpSystemUserCode(3, "Start", "Header")>\
+%<SLibCGIRDumpSystemUserCode(3, "Start", "Body")>\
+/* {S!d550}Start for SimscapeExecutionBlock: '<S99>/STATE_1' */
+/*@>1d794*/tmp/*@>97f0*/ = /*@>280cf*/nesl_lease_simulator(/*@>1d790*/"Motor_and_Driver/Solver Configuration_1", /*@>2e3b4*/0, /*@>2e3b7*/0);
+/*@>2b7c1*/Motor_and_Driver_DW./*@>2e5d6*/STATE_1_Simulator/*@>97f6*/ = /*@>97f4*/(void *)/*@>1d796*/tmp;
+/*@>1d79d*/tmp_0/*@>97fd*/ = /*@>280d1*/pointer_is_null(/*@>2b7c9*/Motor_and_Driver_DW./*@>2e5d9*/STATE_1_Simulator);
+/*@>9812*/if (/*@>1d79f*/tmp_0) {
+    /*@>280d3*/Motor_and_Driver_678d4e8_1_gateway();
+    /*@>1d7a6*/tmp/*@>980a*/ = /*@>280d5*/nesl_lease_simulator(/*@>1d7a2*/"Motor_and_Driver/Solver Configuration_1", /*@>2e3ba*/0, /*@>2e3bd*/0);
+    /*@>2b7d9*/Motor_and_Driver_DW./*@>2e5df*/STATE_1_Simulator/*@>9810*/ = /*@>980e*/(void *)/*@>1d7a8*/tmp;
+}
+/*@>1d7ad*/tmp_1/*@>9817*/ = /*@>280d7*/nesl_create_simulation_data();
+/*@>2b7d1*/Motor_and_Driver_DW./*@>2e5dc*/STATE_1_SimData/*@>981d*/ = /*@>981b*/(void *)/*@>1d7af*/tmp_1;
+/*@>1d7b4*/diagnosticManager/*@>9822*/ = /*@>280d9*/rtw_create_diagnostics();
+/*@>2b7e1*/Motor_and_Driver_DW./*@>2e5e2*/STATE_1_DiagMgr/*@>982d*/ = /*@>982b*/(void *)/*@>1d8d6*/diagnosticManager;
+/*@>1d7b9*/modelParameters./*@>2e564*/mSolverType/*@>9833*/ = /*@>1d7b8*/NE_SOLVER_TYPE_DISCRETE;
+/*@>1d7bd*/modelParameters./*@>2e567*/mSolverTolerance/*@>9839*/ = /*@>1d7bc*/0.001;
+/*@>1d7c1*/modelParameters./*@>2e56a*/mVariableStepSolver/*@>983f*/ = /*@>1d7c0*/false;
+/*@>1d7c5*/modelParameters./*@>2e56d*/mIsUsingODEN/*@>9845*/ = /*@>1d7c4*/false;
+/*@>1d7c9*/modelParameters./*@>2e570*/mFixedStepSize/*@>984b*/ = /*@>1d7c8*/0.001;
+/*@>1d7cd*/modelParameters./*@>2e573*/mStartTime/*@>9851*/ = /*@>1d7cc*/0.0;
+/*@>1d7d1*/modelParameters./*@>2e576*/mLoadInitialState/*@>9857*/ = /*@>1d7d0*/false;
+/*@>1d7d5*/modelParameters./*@>2e579*/mUseSimState/*@>985d*/ = /*@>1d7d4*/false;
+/*@>1d7d9*/modelParameters./*@>2e57c*/mLinTrimCompile/*@>9863*/ = /*@>1d7d8*/false;
+/*@>1d7dd*/modelParameters./*@>2e57f*/mLoggingMode/*@>9869*/ = /*@>1d7dc*/SSC_LOGGING_NONE;
+/*@>1d7e1*/modelParameters./*@>2e582*/mRTWModifiedTimeStamp/*@>986f*/ = /*@>1d7e0*/5.71940484E+8;
+/*@>1d7e5*/modelParameters./*@>2e585*/mZcDisabled/*@>9875*/ = /*@>1d7e4*/false;
+/*@>1d7eb*/tmp_2/*@>987c*/ = %<SLibCG_DumpSSCode("/*@[2d252*/",(SLibCG_SE(SLibCGIRGetVarStepSolverPropertyValue("RelTol", "/*@>1d7e8*/0.001"))),"/*@]*/")>;
+/*@>1d7ef*/modelParameters./*@>2e588*/mSolverTolerance/*@>9883*/ = /*@>1d7ed*/tmp_2;
+/*@>1d7f5*/tmp_2/*@>988a*/ = %<SLibCG_DumpSSCode("/*@[2d256*/",(SLibCG_SE(SLibCGIRGetFixStepSolverPropertyValue("FixedStep", "/*@>1d7f2*/0.0"))),"/*@]*/")>;
+/*@>1d7f9*/modelParameters./*@>2e58b*/mFixedStepSize/*@>9891*/ = /*@>1d7f7*/tmp_2;
+/*@>1d7ff*/tmp_0/*@>9898*/ = %<SLibCG_DumpSSCode("/*@[2d259*/",(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("SolverType", "VariableStep"))),"/*@]*/")>;
+/*@>1d803*/modelParameters./*@>2e58e*/mVariableStepSolver/*@>989f*/ = /*@>1d801*/tmp_0;
+/*@>1d809*/tmp_0/*@>98a6*/ = %<SLibCG_DumpSSCode("/*@[2d25c*/",(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("Solver", "odeN"))),"/*@]*/")>;
+/*@>1d80d*/modelParameters./*@>2e591*/mIsUsingODEN/*@>98ad*/ = /*@>1d80b*/tmp_0;
+/*@>1d810*/modelParameters./*@>2e594*/mLoadInitialState/*@>98b8*/ = /*@>1d8e2*/false;
+/*@>1d813*/modelParameters./*@>2e597*/mZcDisabled/*@>98c3*/ = /*@>1d8e3*/true;
+/*@>1d818*/diagnosticManager/*@>98cf*/ = /*@>98cd*/(NeuDiagnosticManager *)/*@>2b7e9*/Motor_and_Driver_DW./*@>2e5e5*/STATE_1_DiagMgr;
+/*@>1d81d*/diagnosticTree/*@>98d6*/ = /*@>280e3*/neu_diagnostic_manager_get_initial_tree(/*@>1d81a*/diagnosticManager);
+/*@>1d824*/tmp_3/*@>98e5*/ = /*@>280e5*/nesl_initialize_simulator(/*@>ffdb*/(NeslSimulator *)/*@>2b7f1*/Motor_and_Driver_DW./*@>2e5e8*/STATE_1_Simulator, &/*@>1d821*/modelParameters, /*@>1d81f*/diagnosticManager);
+/*@>9907*/if (/*@>1d826*/tmp_3/*@>98ea*/ != /*@>1d828*/0) {
+    /*@>1d82b*/tmp_0/*@>98f0*/ = /*@>280e9*/error_buffer_is_empty(%<SLibCG_DumpSSCode("/*@[2d25f*/",(LibGetRTModelErrorStatus()),"/*@]*/")>);
+    /*@>9905*/if (/*@>1d82d*/tmp_0) {
+        char *msg;
+        /*@>1d830*/msg/*@>98f9*/ = /*@>280eb*/rtw_diagnostics_msg(/*@>1d8d8*/diagnosticTree);
+        %<SLibCG_DumpSSCode("/*@[2d263*/",(LibSetRTModelErrorStatus("/*@>1d8da*/msg")),"/*@]*/")>;
+    }
+}
+/* {E!d550}End of Start for SimscapeExecutionBlock: '<S99>/STATE_1' */
+
+/* {S!d552}Start for SimscapeExecutionBlock: '<S99>/OUTPUT_1_0' */
+/*@>1d837*/tmp/*@>992d*/ = /*@>280ef*/nesl_lease_simulator(/*@>1d833*/"Motor_and_Driver/Solver Configuration_1", /*@>2e3c0*/1, /*@>2e3c3*/0);
+/*@>2b7f9*/Motor_and_Driver_DW./*@>2e5eb*/OUTPUT_1_0_Simulator/*@>9933*/ = /*@>9931*/(void *)/*@>1d839*/tmp;
+/*@>1d840*/tmp_0/*@>993a*/ = /*@>280f1*/pointer_is_null(/*@>2b801*/Motor_and_Driver_DW./*@>2e5ee*/OUTPUT_1_0_Simulator);
+/*@>994f*/if (/*@>1d842*/tmp_0) {
+    /*@>280f3*/Motor_and_Driver_678d4e8_1_gateway();
+    /*@>1d849*/tmp/*@>9947*/ = /*@>280f5*/nesl_lease_simulator(/*@>1d845*/"Motor_and_Driver/Solver Configuration_1", /*@>2e3c6*/1, /*@>2e3c9*/0);
+    /*@>2b811*/Motor_and_Driver_DW./*@>2e5f4*/OUTPUT_1_0_Simulator/*@>994d*/ = /*@>994b*/(void *)/*@>1d84b*/tmp;
+}
+/*@>1d850*/tmp_1/*@>9954*/ = /*@>280f7*/nesl_create_simulation_data();
+/*@>2b809*/Motor_and_Driver_DW./*@>2e5f1*/OUTPUT_1_0_SimData/*@>995a*/ = /*@>9958*/(void *)/*@>1d852*/tmp_1;
+/*@>1d857*/diagnosticManager/*@>995f*/ = /*@>280f9*/rtw_create_diagnostics();
+/*@>2b819*/Motor_and_Driver_DW./*@>2e5f7*/OUTPUT_1_0_DiagMgr/*@>996a*/ = /*@>9968*/(void *)/*@>1d8dc*/diagnosticManager;
+/*@>1d85c*/modelParameters_0./*@>2e59a*/mSolverType/*@>9970*/ = /*@>1d85b*/NE_SOLVER_TYPE_DISCRETE;
+/*@>1d860*/modelParameters_0./*@>2e59d*/mSolverTolerance/*@>9976*/ = /*@>1d85f*/0.001;
+/*@>1d864*/modelParameters_0./*@>2e5a0*/mVariableStepSolver/*@>997c*/ = /*@>1d863*/false;
+/*@>1d868*/modelParameters_0./*@>2e5a3*/mIsUsingODEN/*@>9982*/ = /*@>1d867*/false;
+/*@>1d86c*/modelParameters_0./*@>2e5a6*/mFixedStepSize/*@>9988*/ = /*@>1d86b*/0.001;
+/*@>1d870*/modelParameters_0./*@>2e5a9*/mStartTime/*@>998e*/ = /*@>1d86f*/0.0;
+/*@>1d874*/modelParameters_0./*@>2e5ac*/mLoadInitialState/*@>9994*/ = /*@>1d873*/false;
+/*@>1d878*/modelParameters_0./*@>2e5af*/mUseSimState/*@>999a*/ = /*@>1d877*/false;
+/*@>1d87c*/modelParameters_0./*@>2e5b2*/mLinTrimCompile/*@>99a0*/ = /*@>1d87b*/false;
+/*@>1d880*/modelParameters_0./*@>2e5b5*/mLoggingMode/*@>99a6*/ = /*@>1d87f*/SSC_LOGGING_NONE;
+/*@>1d884*/modelParameters_0./*@>2e5b8*/mRTWModifiedTimeStamp/*@>99ac*/ = /*@>1d883*/5.71940484E+8;
+/*@>1d888*/modelParameters_0./*@>2e5bb*/mZcDisabled/*@>99b2*/ = /*@>1d887*/false;
+/*@>1d88e*/tmp_2/*@>99b9*/ = %<SLibCG_DumpSSCode("/*@[2d267*/",(SLibCG_SE(SLibCGIRGetVarStepSolverPropertyValue("RelTol", "/*@>1d88b*/0.001"))),"/*@]*/")>;
+/*@>1d892*/modelParameters_0./*@>2e5be*/mSolverTolerance/*@>99c0*/ = /*@>1d890*/tmp_2;
+/*@>1d898*/tmp_2/*@>99c7*/ = %<SLibCG_DumpSSCode("/*@[2d26b*/",(SLibCG_SE(SLibCGIRGetFixStepSolverPropertyValue("FixedStep", "/*@>1d895*/0.0"))),"/*@]*/")>;
+/*@>1d89c*/modelParameters_0./*@>2e5c1*/mFixedStepSize/*@>99ce*/ = /*@>1d89a*/tmp_2;
+/*@>1d8a2*/tmp_0/*@>99d5*/ = %<SLibCG_DumpSSCode("/*@[2d26e*/",(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("SolverType", "VariableStep"))),"/*@]*/")>;
+/*@>1d8a6*/modelParameters_0./*@>2e5c4*/mVariableStepSolver/*@>99dc*/ = /*@>1d8a4*/tmp_0;
+/*@>1d8ac*/tmp_0/*@>99e3*/ = %<SLibCG_DumpSSCode("/*@[2d271*/",(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("Solver", "odeN"))),"/*@]*/")>;
+/*@>1d8b0*/modelParameters_0./*@>2e5c7*/mIsUsingODEN/*@>99ea*/ = /*@>1d8ae*/tmp_0;
+/*@>1d8b3*/modelParameters_0./*@>2e5ca*/mLoadInitialState/*@>99f5*/ = /*@>1d8e6*/false;
+/*@>1d8b6*/modelParameters_0./*@>2e5cd*/mZcDisabled/*@>9a00*/ = /*@>1d8e7*/true;
+/*@>1d8bb*/diagnosticManager/*@>9a0c*/ = /*@>9a0a*/(NeuDiagnosticManager *)/*@>2b821*/Motor_and_Driver_DW./*@>2e5fa*/OUTPUT_1_0_DiagMgr;
+/*@>1d8c0*/diagnosticTree_0/*@>9a13*/ = /*@>28103*/neu_diagnostic_manager_get_initial_tree(/*@>1d8bd*/diagnosticManager);
+/*@>1d8c7*/tmp_3/*@>9a22*/ = /*@>28105*/nesl_initialize_simulator(/*@>ffe7*/(NeslSimulator *)/*@>2b829*/Motor_and_Driver_DW./*@>2e5fd*/OUTPUT_1_0_Simulator, &/*@>1d8c4*/modelParameters_0, /*@>1d8c2*/diagnosticManager);
+/*@>9a44*/if (/*@>1d8c9*/tmp_3/*@>9a27*/ != /*@>1d8cb*/0) {
+    /*@>1d8ce*/tmp_0/*@>9a2d*/ = /*@>28109*/error_buffer_is_empty(%<SLibCG_DumpSSCode("/*@[2d274*/",(LibGetRTModelErrorStatus()),"/*@]*/")>);
+    /*@>9a42*/if (/*@>1d8d0*/tmp_0) {
+        char *msg_0;
+        /*@>1d8d3*/msg_0/*@>9a36*/ = /*@>2810b*/rtw_diagnostics_msg(/*@>1d8de*/diagnosticTree_0);
+        %<SLibCG_DumpSSCode("/*@[2d278*/",(LibSetRTModelErrorStatus("/*@>1d8e0*/msg_0")),"/*@]*/")>;
+    }
+}
+/* {E!d552}End of Start for SimscapeExecutionBlock: '<S99>/OUTPUT_1_0' */
+%<SLibCGIRDumpSystemUserCode(3, "Start", "Trailer")>\
+/* {S!d554}SystemInitialize for Saturate: '<S56>/Saturation' incorporates:
+ *  Merge: '<S66>/Merge'
+ */
+/*@>2b19d*/Motor_and_Driver_B./*@>2e5d0*/Merge/*@>97c3*/ = /*@>1d8ea*/0.0;
+/* {S!d556}SystemInitialize for Merge: '<S66>/Merge1' */
+/*@>2b1a5*/Motor_and_Driver_B./*@>2e5d3*/Merge1/*@>97c5*/ = /*@>1d8eb*/0.0;
+%<SLibInsertInitPeriodicCStatesFcn(system)>
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedModelInitializeLocalVars", localVarDecl)>
+%endfunction
+%function ModelInitializeFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void ModelInitialize(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%endfunction
