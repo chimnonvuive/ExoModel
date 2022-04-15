@@ -1,0 +1,62 @@
+DZ_DSMC_capi.o: \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_capi.c \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_capi.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/rtwtypes.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/builtin_typeid_types.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/rtwtypes.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_modelmap.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_capi.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_modelmap_logging.h \
+ C:/PROGRA~1/MATLAB/R2021b/simulink/include/sysran_types.h \
+ C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_types.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/multiword_types.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/MW_target_hardware_resources.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_ArduinoHWInit.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/SCHEDU~1/include/arduinoAVRScheduler.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/mega/pins_arduino.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_capi.h \
+ C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_private.h
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_capi.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/rtwtypes.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/builtin_typeid_types.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/rtwtypes.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_modelmap.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_capi.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/rtw_modelmap_logging.h:
+
+C:/PROGRA~1/MATLAB/R2021b/simulink/include/sysran_types.h:
+
+C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_types.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/slprj/ert/_sharedutils/multiword_types.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/MW_target_hardware_resources.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_ArduinoHWInit.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/SCHEDU~1/include/arduinoAVRScheduler.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/mega/pins_arduino.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_capi.h:
+
+C:/Users/khoi/Documents/GitHub/ExoModel/Data/Cache/Code/DZ_DSMC_ert_rtw/DZ_DSMC_private.h:
