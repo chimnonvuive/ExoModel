@@ -2,19 +2,17 @@ clear
 close all force
 clc
 
-cd EPOS4
-
 % delete *.mexa64
 % delete *.mexa32
 % delete *.mexw32
-% delete *.mexw64de
+% delete *.mexw64
 
-delete *.dll
-delete *.lib
-
-cd ..\
+delete('EPOS4\*.dll')
+delete('EPOS4\*.lib')
 
 try
+    rmdir('Data\Cache\sm_cache\*','s')
+    rmdir('rtwgen_tlc','s')
     rmdir('dig','s')
 catch
 end
