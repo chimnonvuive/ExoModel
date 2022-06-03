@@ -1,0 +1,12 @@
+
+avrdude: AVR device initialized and ready to accept instructions
+avrdude: Device signature = 0x1e950f (probably m328p)
+avrdude: NOTE: "flash" memory has been specified, an erase cycle will be performed
+         To disable this feature, specify the -D option.
+avrdude: erasing chip
+avrdude: reading input file "D:\Repos\ExoModel\Data\Cache\Code/untitled.hex"
+avrdude: writing flash (19624 bytes):
+avrdude: 19624 bytes of flash written
+
+avrdude done.  Thank you.
+

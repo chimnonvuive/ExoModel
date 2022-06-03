@@ -1,0 +1,44 @@
+MW_SerialWrite.o: \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/toolbox/target/supportpackages/arduinobase/src/MW_SerialWrite.cpp \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/WCharacter.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/WString.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/HardwareSerial.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Stream.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Print.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Printable.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/USBAPI.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/standard/pins_arduino.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~2/include/MW_SerialWrite.h \
+ D:/Repos/ExoModel/Data/Cache/Code/EmbeddedOpenLoop_ert_rtw/rtwtypes.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~2/include/io_wrappers.h
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/WCharacter.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/WString.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/HardwareSerial.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Stream.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Print.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Printable.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/USBAPI.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/standard/pins_arduino.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~2/include/MW_SerialWrite.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/EmbeddedOpenLoop_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~2/include/io_wrappers.h:

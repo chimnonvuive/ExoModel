@@ -1,0 +1,33 @@
+%implements s0_b0_hn8eh_ModelClassDefinition "C"
+%function ModelClassDefinition(block) Output
+%openfile tmp
+class DSMC_paramsModelClass
+{
+  public:
+    %<SLibFillInPublicClassMembers()>
+        /* model start function */
+void start();
+        /* Initial conditions function */
+void initialize();
+        /* model step function */
+%<FcnStaticOnEmptyOutputUpdateMethod()>void step()%<AddConstToStepIfNeccessary("Outputs")>;
+        /* model terminate function */
+%<FcnStaticOnEmptyTermMethod()>void terminate()%<AddConstToTermIfNecessary("terminate")>;
+        /* Constructor */
+DSMC_paramsModelClass();
+        /* Destructor */
+~DSMC_paramsModelClass();
+  protected:
+    %<SLibFillInProtectedClassMembers()>
+  private:
+    /* Block signals */
+    B_DSMC_params_T DSMC_params_B;
+    /* Block states */
+    DW_DSMC_params_T DSMC_params_DW;
+    /* Tunable parameters */
+    static P_DSMC_params_T DSMC_params_P;
+    %<SLibFillInPrivateClassMembers()>
+};
+%closefile tmp
+%return tmp
+%endfunction

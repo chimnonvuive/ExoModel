@@ -1,0 +1,295 @@
+%implements s0_b0_hn8eh_Functions "C"
+
+%function RandSrcInitState_U_32_Fcn0(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+/* {S!d1098}Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+/* RandSrcInitState_U_32 */
+for ( int32_T i{0}; i < nChans; i++) {
+    uint32_T j;
+    j = seed[i] != 0U ? seed[i] : 2147483648U;
+    state[35 * i + 34] = static_cast<real32_T>(j);
+    for ( int32_T k{0}; k < 32; k++) {
+        real32_T d;
+        d = 0.0F;
+        for ( int32_T n{0}; n < 24; n++) {
+            j ^= j << 13;
+            j ^= j >> 17;
+            j ^= j << 5;
+            d = static_cast<real32_T>(static_cast<int32_T>(j >> 19) & 1) + (d + d);
+        }
+        state[35 * i + k] = std::ldexp(d, -24);
+    }
+    state[35 * i + 32] = 0.0F;
+    state[35 * i + 33] = 0.0F;
+}
+/* {E!d1098}End of Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void RandSrcInitState_U_32(\
+%assign comma = ""
+%<comma>const uint32_T seed[]\
+%assign comma = ", "
+%<comma>real32_T state[]\
+%assign comma = ", "
+%<comma>int32_T nChans\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 0, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function RandSrc_U_R_Fcn1(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+int32_T ii;
+real32_T d;
+/* {S!d1100}Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+/* RandSrc_U_R */
+for ( int32_T chan{0}; chan < nChans; chan++) {
+    int32_T i;
+    int32_T i_tmp;
+    int32_T j_tmp;
+    real32_T min;
+    real32_T scale;
+    uint32_T j;
+    min = minVec[minLen > 1 ? chan : 0];
+    scale = maxVec[maxLen > 1 ? chan : 0] - min;
+    i_tmp = chan * 35 + 33;
+    i = static_cast<int32_T>(static_cast<uint32_T>(state[i_tmp]) & 31U);
+    j_tmp = chan * 35 + 34;
+    j = static_cast<uint32_T>(state[j_tmp]);
+    for ( int32_T samps{0}; samps < nSamps; samps++) {
+        int32_T d_tmp;
+        /* "Subtract with borrow" generator */
+        d_tmp = chan * 35 + 32;
+        d = (state[((i + 20) & 31) + chan * 35] - state[((i + 5) & 31) + chan * 35]) - state[d_tmp];
+        if (d >= 0.0F) {
+            state[d_tmp] = 0.0F;
+        } else {
+            d++;
+            /* set 1 in LSB */
+            state[d_tmp] = 5.96046448E-8F;
+        }
+        state[chan * 35 + i] = d;
+        i = (i + 1) & 31;
+        /* XOR with shift register sequence */
+        std::memcpy(&ii, &d, sizeof(real32_T));
+        j ^= j << 13;
+        j ^= j >> 17;
+        j ^= j << 5;
+        ii = static_cast<int32_T>((j & 8388607U) ^ ii);
+        std::memcpy(&d, &ii, sizeof(real32_T));
+        y[chan * nSamps + samps] = scale * d + min;
+    }
+    state[i_tmp] = static_cast<real32_T>(i);
+    state[j_tmp] = static_cast<real32_T>(j);
+}
+/* {E!d1100}End of Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void RandSrc_U_R(\
+%assign comma = ""
+%<comma>real32_T y[]\
+%assign comma = ", "
+%<comma>const real32_T minVec[]\
+%assign comma = ", "
+%<comma>int32_T minLen\
+%assign comma = ", "
+%<comma>const real32_T maxVec[]\
+%assign comma = ", "
+%<comma>int32_T maxLen\
+%assign comma = ", "
+%<comma>real32_T state[]\
+%assign comma = ", "
+%<comma>int32_T nChans\
+%assign comma = ", "
+%<comma>int32_T nSamps\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 1, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function RandSrcCreateSeeds_32_Fcn2(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real32_T state[35];
+real32_T max;
+real32_T min;
+real32_T tmp;
+%assign _modelSS = ""
+
+%if SLibCG_FcnCallArgAccessed(0,2,0,0)
+%<SLibCG_AccessArg(0 ,2, 0)>
+%endif
+
+/* {S!d1096}Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+/* RandSrcCreateSeeds_32 */
+min = 0.0F;
+max = 1.0F;
+%<(SLibCGCallSubFcn("RandSrcInitState_U_32", ["&initSeed", "&state[0]", "1"], 0, 2, 0))>;
+for ( int32_T i{0}; i < numSeeds; i++) {
+    %<(SLibCGCallSubFcn("RandSrc_U_R", ["&tmp", "&min", "1", "&max", "1", "state", "1", "1"], 0, 2, 1))>;
+    seedArray[i] = static_cast<uint32_T>(tmp * 2.14748365E+9F);
+}
+/* {E!d1096}End of Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void RandSrcCreateSeeds_32(\
+%assign comma = ""
+%<comma>uint32_T initSeed\
+%assign comma = ", "
+%<comma>uint32_T seedArray[]\
+%assign comma = ", "
+%<comma>int32_T numSeeds\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function RandSrcInitState_GZ_Fcn3(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+/* {S!d1102}Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+/* RandSrcInitState_GZ */
+for ( int32_T i{0}; i < nChans; i++) {
+    int32_T tmp;
+    tmp = i << 1;
+    state[tmp] = 362436069U;
+    state[tmp + 1] = seed[i] == 0U ? 521288629U : seed[i];
+}
+/* {E!d1102}End of Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void RandSrcInitState_GZ(\
+%assign comma = ""
+%<comma>const uint32_T seed[]\
+%assign comma = ", "
+%<comma>uint32_T state[]\
+%assign comma = ", "
+%<comma>int32_T nChans\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 3, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function RandSrc_GZ_R_Fcn4(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+static const real32_T vt[65]{ 0.340945F, 0.45731461F, 0.539779305F, 0.606242716F, 0.663169086F, 0.713697493F, 0.759612501F, 0.80203563F, 0.841722727F, 0.879210174F, 0.914894819F, 0.949079096F, 0.98200053F, 1.01384926F, 1.04478097F, 1.07492542F, 1.10439169F, 1.13327384F, 1.16165304F, 1.18960094F, 1.21718144F, 1.24445164F, 1.27146351F, 1.29826498F, 1.32490075F, 1.35141253F, 1.37783992F, 1.40422106F, 1.43059289F, 1.45699155F, 1.48345268F, 1.51001215F, 1.53670609F, 1.56357121F, 1.59064543F, 1.61796796F, 1.64558017F, 1.67352545F, 1.7018503F, 1.73060453F, 1.75984216F, 1.78962231F, 1.82001F, 1.85107696F, 1.88290441F, 1.91558313F, 1.9492166F, 1.98392391F, 2.0198431F, 2.05713558F, 2.09599304F, 2.13664508F, 2.17937136F, 2.22451758F, 2.27251863F, 2.32393384F, 2.37950087F, 2.44022179F, 2.50751162F, 2.58346581F, 2.67139149F, 2.77699423F, 2.77699423F, 2.77699423F, 2.77699423F };
+/* {S!d1104}S-Function (sdsprandsrc2): '<Root>/Random Source' */
+/* RandSrc_GZ_R */
+for ( int32_T chan{0}; chan < nChans; chan++) {
+    int32_T icng_tmp;
+    real32_T std;
+    uint32_T icng;
+    uint32_T jsr;
+    std = xstd[xstdLen > 1 ? chan : 0];
+    icng_tmp = chan << 1;
+    icng = state[icng_tmp];
+    jsr = state[icng_tmp + 1];
+    for ( int32_T samp{0}; samp < nSamps; samp++) {
+        int32_T i;
+        int32_T j;
+        real32_T r;
+        real32_T x;
+        real32_T y_0;
+        icng = 69069U * icng + 1234567U;
+        jsr ^= jsr << 13;
+        jsr ^= jsr >> 17;
+        jsr ^= jsr << 5;
+        i = static_cast<int32_T>(icng + jsr);
+        j = (i & 63) + 1;
+        r = static_cast<real32_T>(i) * 4.65661287E-10F * vt[j];
+        x = std::abs(r);
+        y_0 = vt[j - 1];
+        if (!(x <= y_0)) {
+            real32_T s;
+            x = (x - y_0) / (vt[j] - y_0);
+            icng = 69069U * icng + 1234567U;
+            jsr ^= jsr << 13;
+            jsr ^= jsr >> 17;
+            jsr ^= jsr << 5;
+            y_0 = static_cast<real32_T>(static_cast<int32_T>(icng + jsr)) * 2.32830644E-10F + 0.5F;
+            s = x + y_0;
+            if (s > 1.30119801F) {
+                r = r < 0.0F ? 0.487899214F * x - 0.487899214F : 0.487899214F - 0.487899214F * x;
+            } else if (!(s <= 0.96892792F)) {
+                x = 0.487899214F - 0.487899214F * x;
+                if (y_0 > 12.6770601F - std::exp(-0.5F * x * x) * 12.3758602F) {
+                    r = r < 0.0F ? -x : x;
+                } else if (!(std::exp(-0.5F * vt[j] * vt[j]) + y_0 * 0.0195830297F / vt[j] <= std::exp(-0.5F * r * r))) {
+                    do {
+                        icng = 69069U * icng + 1234567U;
+                        jsr ^= jsr << 13;
+                        jsr ^= jsr >> 17;
+                        jsr ^= jsr << 5;
+                        x = std::log(static_cast<real32_T>(static_cast<int32_T>(icng + jsr)) * 2.32830644E-10F + 0.5F) / 2.77699399F;
+                        icng = 69069U * icng + 1234567U;
+                        jsr ^= jsr << 13;
+                        jsr ^= jsr >> 17;
+                        jsr ^= jsr << 5;
+                    } while (std::log(static_cast<real32_T>(static_cast<int32_T>(icng + jsr)) * 2.32830644E-10F + 0.5F) * -2.0F <= x * x);
+                    r = r < 0.0F ? x - 2.77699399F : 2.77699399F - x;
+                }
+            }
+        }
+        y[chan * nSamps + samp] = mean[meanLen > 1 ? chan : 0] + std * r;
+    }
+    state[icng_tmp] = icng;
+    state[icng_tmp + 1] = jsr;
+}
+/* {E!d1104}End of S-Function (sdsprandsrc2): '<Root>/Random Source' */
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void RandSrc_GZ_R(\
+%assign comma = ""
+%<comma>real32_T y[]\
+%assign comma = ", "
+%<comma>const real32_T mean[]\
+%assign comma = ", "
+%<comma>int32_T meanLen\
+%assign comma = ", "
+%<comma>const real32_T xstd[]\
+%assign comma = ", "
+%<comma>int32_T xstdLen\
+%assign comma = ", "
+%<comma>uint32_T state[]\
+%assign comma = ", "
+%<comma>int32_T nChans\
+%assign comma = ", "
+%<comma>int32_T nSamps\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 4, fcnProtoType)>
+%return fcnBuff
+%endfunction
+

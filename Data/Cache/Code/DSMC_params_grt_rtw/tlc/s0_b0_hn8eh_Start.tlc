@@ -1,0 +1,41 @@
+%implements s0_b0_hn8eh_Start "C"
+
+%function Start(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+uint32_T initSeed;
+%closefile localVarDecl
+%assign tlcSetupRuntimeResourcesFcnOfS0B3 = OpaqueTLCBlockFcn("SetupRuntimeResources", 0, 3, 0, 5, 0)
+%assign tlcStartFcnOfS0B0 = OpaqueTLCBlockFcn("Start", 0, 0, 0, 5, 1)
+%assign tlcStartFcnOfS0B1 = OpaqueTLCBlockFcn("Start", 0, 1, 0, 5, 2)
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS0B3)
+/* SetupRuntimeResources for Scope: '<S3>/Scope1' */
+%<tlcSetupRuntimeResourcesFcnOfS0B3>\
+%endif
+%if !WHITE_SPACE(tlcStartFcnOfS0B0)
+/* Start for FromWorkspace: '<S2>/From Workspace' */
+%<tlcStartFcnOfS0B0>\
+%endif
+%if !WHITE_SPACE(tlcStartFcnOfS0B1)
+/* Start for FromWorkspace: '<S2>/From Workspace1' */
+%<tlcStartFcnOfS0B1>\
+%endif
+/* Start for S-Function (sdsprandsrc2): '<Root>/Random Source' */
+initSeed = static_cast<uint32_T>(100000 * rand());
+%<(SLibCGCallSubFcn("RandSrcCreateSeeds_32", ["initSeed", "&DSMC_params_DW.RandomSource_SEED_DWORK", "1"], 0, 5, 0))>;
+%<(SLibCGCallSubFcn("RandSrcInitState_GZ", ["&DSMC_params_DW.RandomSource_SEED_DWORK", "&DSMC_params_DW.RandomSource_STATE_DWORK[0]", "1"], 0, 5, 1))>;
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedStartLocalVars", localVarDecl)>
+%endfunction
+%function StartFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Start(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 5, fcnProtoType)>
+%endfunction

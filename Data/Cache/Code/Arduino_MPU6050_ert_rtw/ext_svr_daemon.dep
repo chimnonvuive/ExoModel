@@ -1,0 +1,41 @@
+ext_svr_daemon.o: \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/toolbox/target/shared/externalmode_daemon/src/ext_svr_daemon.c \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/multiword_types.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_types.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_share.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_test.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_svr_transport.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/updown.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/upsup_public.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/updown_util.h \
+ C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/dt_info.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/shared/EXTERN~1/include/daemon_checksum.h
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/multiword_types.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_types.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_share.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_test.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/ext_svr_transport.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/updown.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/upsup_public.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/ext_mode/common/updown_util.h:
+
+C:/PROGRA~1/MATLAB/R2021b/rtw/c/src/dt_info.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/shared/EXTERN~1/include/daemon_checksum.h:

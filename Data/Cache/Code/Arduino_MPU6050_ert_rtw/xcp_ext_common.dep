@@ -1,0 +1,50 @@
+xcp_ext_common.o: \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/ext_mode/src/xcp_ext_common.c \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/ext_mode/src/xcp_ext_common.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/ext_mode_types.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/common/xcp_common.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/include/xcp_platform.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/xcp_platform_custom.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/mega/pins_arduino.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/ext_mode/src/xcp_ext_param.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp_transport.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/protocol/src/xcp_cfg.h \
+ C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/ext_mode/src/xcp_ext_common.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/ext_mode_types.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/common/xcp_common.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/include/xcp_platform.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/xcp_platform_custom.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/mega/pins_arduino.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/ext_mode/src/xcp_ext_param.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp_transport.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/protocol/src/xcp_cfg.h:
+
+C:/PROGRA~1/MATLAB/R2021b/simulink/include/rtw_extmode.h:

@@ -1,0 +1,8 @@
+%implements s0_b0_hn8eh_BlockInstanceSetup "C"
+
+%function BlockInstanceSetup(block, system) Output
+%% Subsystems with iterators in IR:
+%% TLC Block Registration buffer:
+%<LibAddToCommonIncludes("stdlib.h")>
+%% END  Block Registration buffer
+%endfunction

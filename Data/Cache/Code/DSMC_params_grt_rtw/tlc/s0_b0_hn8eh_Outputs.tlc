@@ -1,0 +1,80 @@
+%implements s0_b0_hn8eh_Outputs "C"
+
+%function Outputs(block, system) Output
+%<SLibCGIRAccessLocalVar(0, 0, "")> %% rtb_FromWorkspace1
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real32_T rtb_Gain4[2];
+real32_T rtb_Gain_m[2];
+real32_T rtb_Gain1_idx_3;
+real32_T rtb_Gain_idx_3;
+%closefile localVarDecl
+%assign tlcOutputsFcnOfS0B0 = OpaqueTLCBlockFcn("Outputs", 0, 0, 0, 7, 0)
+%assign tlcOutputsFcnOfS0B1 = OpaqueTLCBlockFcn("Outputs", 0, 1, 0, 7, 1)
+%assign tlcOutputsFcnOfS0B2 = OpaqueTLCBlockFcnForMdlRef("Outputs", 0, 2, 0, 7, 2)
+%assign tlcOutputsFcnOfS0B3 = OpaqueTLCBlockFcn("Outputs", 0, 3, 0, 7, 3)
+if (%<(SLibCGIRIsSampleHit(4, 0))>) {
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B0)
+    /* {S!d1066}FromWorkspace: '<S2>/From Workspace' */
+%<tlcOutputsFcnOfS0B0>\
+%endif
+    /* {S!d1068}Gain: '<S2>/Gain' incorporates:
+ *  DataTypeConversion: '<S2>/Data Type Conversion'
+ */
+    rtb_Gain_idx_3 = DSMC_params_P.Gain_Gain * static_cast<real32_T>(rtb_FromWorkspace1[3]);
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B1)
+    /* {S!d1070}FromWorkspace: '<S2>/From Workspace1' */
+%<tlcOutputsFcnOfS0B1>\
+%endif
+    /* {S!d1072}Gain: '<S2>/Gain1' incorporates:
+ *  DataTypeConversion: '<S2>/Data Type Conversion1'
+ */
+    rtb_Gain1_idx_3 = DSMC_params_P.Gain1_Gain * static_cast<real32_T>(rtb_FromWorkspace1[3]);
+    /* {S!d1074}SignalConversion generated from: '<Root>/Model' */
+    DSMC_params_B.TmpSignalConversionAtModelInpor[0] = rtb_Gain_idx_3;
+    DSMC_params_B.TmpSignalConversionAtModelInpor[1] = rtb_Gain1_idx_3;
+    /* {S!d1076}S-Function (sdsprandsrc2): '<Root>/Random Source' */
+    %<(SLibCGCallSubFcn("RandSrc_GZ_R", ["&DSMC_params_B.dk", "&DSMC_params_P.RandomSource_MeanVal", "1", "&DSMC_params_P.RandomSource_VarianceRTP", "1", "DSMC_params_DW.RandomSource_STATE_DWORK", "1", "1"], 0, 7, 0))>;
+}
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B2)
+/* {S!d1078}ModelReference: '<Root>/Model' */
+%<tlcOutputsFcnOfS0B2>\
+%endif
+if (%<(SLibCGIRIsSampleHit(4, 0))>) {
+    /* {S!d1080}Gain: '<S3>/Gain4' incorporates:
+ *  Delay: '<S3>/Delay2'
+ */
+    rtb_Gain4[0] = DSMC_params_P.Gain4_Gain * DSMC_params_DW.Delay2_DSTATE[0U];
+    rtb_Gain4[1] = DSMC_params_P.Gain4_Gain * DSMC_params_B.Model[0];
+    /* {S!d1082}Gain: '<S3>/Gain' incorporates:
+ *  Delay: '<S3>/Delay3'
+ */
+    rtb_Gain_m[0] = DSMC_params_P.Gain_Gain_d * DSMC_params_DW.Delay3_DSTATE[0U];
+    rtb_Gain_m[1] = DSMC_params_P.Gain_Gain_d * DSMC_params_B.Model[1];
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B3)
+    /* {S!d1084}Scope: '<S3>/Scope1' */
+%<tlcOutputsFcnOfS0B3>\
+%endif
+    /* {S!d1086}Update for Delay: '<S3>/Delay2' */
+    DSMC_params_DW.Delay2_DSTATE[0] = DSMC_params_DW.Delay2_DSTATE[1];
+    DSMC_params_DW.Delay2_DSTATE[1] = rtb_Gain_idx_3;
+    /* {S!d1088}Update for Delay: '<S3>/Delay3' */
+    DSMC_params_DW.Delay3_DSTATE[0] = DSMC_params_DW.Delay3_DSTATE[1];
+    DSMC_params_DW.Delay3_DSTATE[1] = rtb_Gain1_idx_3;
+}
+%<SLibInsertSolverResetCode()>\
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 7, fcnProtoType)>
+%endfunction

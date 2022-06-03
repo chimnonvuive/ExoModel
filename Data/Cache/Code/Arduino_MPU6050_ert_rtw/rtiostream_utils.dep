@@ -1,0 +1,11 @@
+rtiostream_utils.o: \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/utils/rtiostream_utils.c \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/utils/rtiostream_utils.h \
+ D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/rtiostream.h
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/utils/rtiostream_utils.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/Arduino_MPU6050_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/rtiostream.h:

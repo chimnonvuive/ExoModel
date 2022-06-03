@@ -1,0 +1,34 @@
+%implements s0_b0_hn8eh_SystemInitialize "C"
+
+%function SystemInitialize(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%assign tlcSystemInitializeFcnOfS0B2 = OpaqueTLCBlockFcnForMdlRef("SystemInitialize", 0, 2, 0, 6, 0)
+%<SLibInsertAsyncTaskInitializeCode(system)>
+%<SLibWriteMachineInitialize()>
+/* InitializeConditions for Delay: '<S3>/Delay2' */
+DSMC_params_DW.Delay2_DSTATE[0] = DSMC_params_P.Delay2_InitialCondition;
+/* InitializeConditions for Delay: '<S3>/Delay3' */
+DSMC_params_DW.Delay3_DSTATE[0] = DSMC_params_P.Delay3_InitialCondition;
+/* InitializeConditions for Delay: '<S3>/Delay2' */
+DSMC_params_DW.Delay2_DSTATE[1] = DSMC_params_P.Delay2_InitialCondition;
+/* InitializeConditions for Delay: '<S3>/Delay3' */
+DSMC_params_DW.Delay3_DSTATE[1] = DSMC_params_P.Delay3_InitialCondition;
+%if !WHITE_SPACE(tlcSystemInitializeFcnOfS0B2)
+/* SystemInitialize for ModelReference: '<Root>/Model' */
+%<tlcSystemInitializeFcnOfS0B2>\
+%endif
+%<SLibInsertInitPeriodicCStatesFcn(system)>
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedSystemInitializeLocalVars", localVarDecl)>
+%endfunction
+%function SystemInitializeFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void SystemInitialize(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 6, fcnProtoType)>
+%endfunction

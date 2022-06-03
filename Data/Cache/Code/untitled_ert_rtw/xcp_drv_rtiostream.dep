@@ -1,0 +1,32 @@
+xcp_drv_rtiostream.o: \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/default/xcp_drv_rtiostream.c \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/rtiostream.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/common/xcp_common.h \
+ D:/Repos/ExoModel/Data/Cache/Code/untitled_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/include/xcp_platform.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/xcp_platform_custom.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/standard/pins_arduino.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h \
+ C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/default/xcp_drv.h
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/rtiostream/src/rtiostream.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/common/xcp_common.h:
+
+D:/Repos/ExoModel/Data/Cache/Code/untitled_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/include/xcp_platform.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2021b/toolbox/target/SUPPOR~1/ARDUIN~1/include/xcp_platform_custom.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2021b/aIDE/hardware/arduino/avr/variants/standard/pins_arduino.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/include/xcp.h:
+
+C:/PROGRA~1/MATLAB/R2021b/toolbox/coder/xcp/src/target/slave/platform/default/xcp_drv.h:
